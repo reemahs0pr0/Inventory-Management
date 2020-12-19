@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Catalog</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+
+	<h1>Catalog</h1>
+	<!-- Add Hyperlink -->
+	
+
+	<h2 th:if="${not #lists.isEmpty(products)}">Catalog</h2>
+	
+	<!-- search bar -->
+	<form th:action="@{/catalog/list}">
+    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+    <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
+	
+	<!-- Clear fields -->
+	<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/catalog/list}]]";
+    }
+	</script>
+
+	<table th:if="${not #lists.isEmpty(products)}" >
+		<tr >
+		<th>Product ID</th>
+		<th>Name </th>
+		<th>Description</th>
+		<th>Type</th>
+		<th>Category</th>
+		<th>Sub Category</th>
+		<th>Original Price</th>
+		<th>WholeSale Price</th>
+		<th>Retail Price</th>
+		<th>Partner Price</th>
+		<th>MOQ</th>
+		<th>Supplier</th>
+		</tr>
+
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text=${product.productId}>Id</td>
+			<td> <a th:href="@{/catalog/details/{id}(id=${product.productId})}" th:text=${product.name}>Name</a></td>
+			<td th:text=${product.description}>Description</td>
+			<td th:text=${product.type}>Type</td>
+			<td th:text=${product.Category}>Category</td>
+			<td th:text=${product.subCategory}>Sub Category</td>
+			<td th:text=${product.originalPrice}>Original Price</td>
+			<td th:text=${product.wholesalePrice}>Wholesale Price</td>
+			<td th:text=${product.retailPrice}>Retail Price</td>
+			<td th:text=${product.partnerPrice}>Partner Price</td>
+			<td th:text=${product.MOQ}>MOQ</td>
+			<td th:text=${product.supplier.companyName}>Supplier Name</td>
+			
+		</tr>
+	</table>
+    <br/>
+	<div th:replace="fragments/general.html :: footer"></div>
+	
+</body>
+</html>

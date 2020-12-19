@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Transcation History</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>				
+<form action="http://localhost:8080/searchusage" method="get">Date From: <input type="date" name="datefrom" id="datefrom" max="2020-12-16" >
+	 To: <input type="date" name="dateto" id="dateto" max="2020-12-16">
+  	  <input type="submit" id="report" value="Generate Report" formtarget="_blank"></form>
+		
+			
+<table class="table1">
+    	<tr >
+		<th>Id</th>
+		<th>Date</th>
+		<th>Car</th>
+		<th>Model</th>
+		<th>Customer Name</th>
+		<th>Consumed Qty</th>
+		</tr>
+
+ 
+	<th:block th:each = "c : ${consumptions}">  
+      <th:block th:each = "t: ${transactions}">
+       <tr> 
+       	 <td th:text = "${c.id}">Id</td>
+       	 <td th:text= "${t.date}">Date</td>
+         <td th:text="${t.car.brand}">CBrand</td>
+          <td th:text="${t.car.model}">CModel</td>
+          <td th:text="${t.car.ownerName}">CName</td>
+          <td th:text="${c.consumedQty}">consumed</td>
+             </tr>
+      </th:block>
+ 
+   </th:block>
+
+
+   </table>    
+	
+
+
+<p>
+<a href="Home" th:href="@{/catalog/list}">Back to Catalog</a></p>
+
+</body>
+</html>

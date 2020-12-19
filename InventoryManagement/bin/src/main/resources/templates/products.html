@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Products Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div th:replace="fragments/general.html :: menu"></div>
+
+	<h1>Product Listing</h1>
+	<!-- Add Hyperlink -->
+	<a href="AddProduct.html" th:href="@{/product/add}">Add Product</a>
+
+	<h2 th:if="${not #lists.isEmpty(products)}">Product Listing</h2>
+	<table th:if="${not #lists.isEmpty(products)}" >
+		<tr >
+		<th>Product ID</th>
+		<th>Name </th>
+		<th>Description</th>
+		<th>Type</th>
+		<th>Category</th>
+		<th>Sub Category</th>
+		<th>Original Price</th>
+		<th>WholeSale Price</th>
+		<th>Retail Price</th>
+		<th>Partner Price</th>
+		<th>MOQ</th>
+		<th>Supplier</th>
+		</tr>
+
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text=${product.productId}>Id</td>
+			<td th:text=${product.name}>Name</td>
+			<td th:text=${product.description}>Description</td>
+			<td th:text=${product.type}>Type</td>
+			<td th:text=${product.Category}>Category</td>
+			<td th:text=${product.subCategory}>Sub Category</td>
+			<td th:text=${product.originalPrice}>Original Price</td>
+			<td th:text=${product.wholesalePrice}>Wholesale Price</td>
+			<td th:text=${product.retailPrice}>Retail Price</td>
+			<td th:text=${product.partnerPrice}>Partner Price</td>
+			<td th:text=${product.MOQ}>MOQ</td>
+			<td th:text=${product.supplier.companyName}>Supplier Name</td>
+			<td><a href="EditProduct.html"
+				th:href="@{/product/edit/}+${product.productId}">Edit</a></td>
+			<td><a href="DeleteSupplier.html"
+				th:href="@{/product/delete/}+${product.productId}">Delete</a></td>
+		</tr>
+	</table>
+    <br/>
+	<div th:replace="fragments/general.html :: footer"></div>
+	
+</body>
+</html>
