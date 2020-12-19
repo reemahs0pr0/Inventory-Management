@@ -133,8 +133,9 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 		        message.setTo(recipients);
 		        //uncomment next line and input own email address for testing
 				//message.setTo(<RECIPIENT EMAIL ADDRESS>);
-		        message.setSubject("Notification: Product Low In Stock"); 
-		        message.setText("Product Id: " +dbConsumption.getProduct().getName()+"is low. Please reorder additional qty.");
+		        message.setSubject("Notification: Product Low In Stock");
+		        message.setText("[Product Id: " + dbConsumption.getProduct().getProductId() + "] " 
+		        		+ dbConsumption.getProduct().getName() + " is low in stock. Please reorder additional qty.");
 		        emailSender.send(message);
 		        //add new reorder record
 		        rrepo.save(new Reorder(dbConsumption.getProduct(), OrderStatus.PENDING_ORDER, newStock, 
