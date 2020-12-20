@@ -38,14 +38,6 @@ public class ReorderController {
 		model.addAttribute("today", LocalDate.now().toString());
 		return "reorderslist";
 	}
-	
-//	// User requests to view order details of a specific order made
-//	@RequestMapping(value = "/reorderreport", method = RequestMethod.GET)
-//	public String reorderReport(Model model) {
-//		Reorder reorder = new Reorder();
-//		model.addAttribute("reorder", reorder);
-//		return "reorderreport";
-//	}
 
 	// show reorder form for specific record id
 	@RequestMapping(value = "/viewform/{id}", method = RequestMethod.GET)
@@ -149,14 +141,6 @@ public class ReorderController {
 		}
 	}
 	
-//	// generate reorder report
-//	@RequestMapping(value = "/reorderreport", method = RequestMethod.GET)
-//	public String generateReorderReport(Model model) {
-//		Reorder reorder = new Reorder();
-//		model.addAttribute("reorder", reorder);
-//		return "reorderreport";
-//	}
-//
 }
 	
 

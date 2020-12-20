@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
+<head th:fragment="headerfiles">
+<meta charset="UTF-8" />
 <title>Stock Usage Form</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
 <style>
 fieldset {
   background-color: #eeeeee;
@@ -65,16 +66,16 @@ fieldset {
 	
 		
 		<fieldset>
-			  <input type="submit" value="Add Part" name="addpart"/> &nbsp; &nbsp; <input type="submit" value="Commit" name="commit"/>
+			  <input type="submit" class="btn btn-warning btn-sm" value="Add Part" name="addpart"/> &nbsp; &nbsp; 
+			  <input type="submit" value="Commit" class="btn btn-success btn-sm" name="commit"/>
 		</fieldset>
 
 	</form>
 	<br />
-	<span th:unless="${not #lists.isEmpty(session.consumptions)}"><a href="Home" th:href="@{/usage/add}">Back</a></span>
-	<span th:if="${not #lists.isEmpty(session.consumptions)}"><a href="Home" th:href="@{/usage/removepart}">Back</a></span>
+	<span th:unless="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/add}">Back</a></span>
+	<span th:if="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/removepart}">Back</a></span>
 	<div th:replace="fragments/general.html :: footer"></div>
-	<br/>
-	<span th:if="${session.session == 'admin'}"><a href="Home" th:href="@{/user/home/admin}">Home</a></span>
-	<span th:if="${session.session == 'mechanic'}"><a href="Home" th:href="@{/user/home/mechanic}">Home</a></span>
+	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
+	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
 </body>
 </html>

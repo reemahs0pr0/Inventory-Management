@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
+<head th:fragment="headerfiles">
+<meta charset="UTF-8" />
 <title>Stock Usage Form</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
 <style>
 fieldset {
   background-color: #eeeeee;
@@ -15,8 +16,13 @@ fieldset {
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>
-
-	<h1>Stock Usage Form </h1>
+		<table width="100%" class="center">
+			<tr align="center">
+				<td width="30%"></td>
+				<td align="center" width="40%"><h1>Stock Usage Form</h1></td>
+				<td  width="30%"></td>
+			</tr>
+		</table>
 	<fieldset>
 		<p th:text="${transaction.date}"></p>
 		<p th:text="${transaction.id}"></p>	
@@ -51,9 +57,9 @@ fieldset {
 	<br />
 	
 	<div th:replace="fragments/general.html :: footer"></div>
-	<a href="AddUser.html" th:href="@{/supplier/list}">Supplier Page</a>
+	<a href="AddUser.html" class="btn btn-success" th:href="@{/supplier/list}">Supplier Page</a>
 	<br/>
-	<span th:if="${session.session == 'admin'}"><a href="Home" th:href="@{/user/home/admin}">Home</a></span>
-	<span th:if="${session.session == 'mechanic'}"><a href="Home" th:href="@{/user/home/mechanic}">Home</a></span>
+	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
+	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
 </body>
 </html>
