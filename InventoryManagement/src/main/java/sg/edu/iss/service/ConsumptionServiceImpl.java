@@ -127,12 +127,18 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 				dbConsumption.getProduct().getStock().setStatus(StockStatus.BELOW_REORDER_LEVEL);
 				strepo.flush();
 				//system order mail reminder to all admins
-				String[] recipients = (String[]) urepo.findAllAdminsEmail().toArray();
+				String[] recipients = urepo.findAllAdminsEmail().toArray(new String[0]);
 				SimpleMailMessage message = new SimpleMailMessage();
 				//comment next line when testing
 		        message.setTo(recipients);
-		        //uncomment next line and input own email address for testing
-				//message.setTo(<RECIPIENT EMAIL ADDRESS>);
+//				--------------------------------------TESTING------------------------------------
+//		        List<String> testRecipientsList = new ArrayList<>();
+//		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 1>);
+//		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 2>);
+//		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 3>);
+//		        String[] testRecipientsListArray = testRecipientsList.toArray(new String[0]);
+//				message.setTo(testRecipientsListArray);
+//				---------------------------------------------------------------------------------
 		        message.setSubject("Notification: Product Low In Stock");
 		        message.setText("[Product Id: " + dbConsumption.getProduct().getProductId() + "] " 
 		        		+ dbConsumption.getProduct().getName() + " is low in stock. Please reorder additional qty.");
