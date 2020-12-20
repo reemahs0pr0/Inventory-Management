@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
-<meta charset="UTF-8" />
-<title>Welcome Back!</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<meta charset="UTF-8" />
+	<title>Welcome Back!</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
@@ -42,9 +41,9 @@
 					class="btn btn-default btn-block" /></td>
 			</tr>
 			<tr align="center">
-		<td colspan="2"><input type="button" value="Logout"
-				onclick="window.location.href='/user/logout'; return false"
-				class="btn btn-danger btn-block" /></td>
+				<td colspan="2"><input type="button" value="Logout"
+								onclick="window.location.href='/user/logout'; return false"
+								class="btn btn-danger btn-block" /></td>
 			</tr>
 		</table>
 	</div>

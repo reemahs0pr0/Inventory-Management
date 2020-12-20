@@ -1,22 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
-<meta charset="UTF-8" />
-<title>Stock Usage Form</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
-<style>
-fieldset {
-  background-color: #eeeeee;
-}
-
-</style>
+	<meta charset="UTF-8" />
+	<title>Stock Usage Form</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
+	<style>
+	fieldset {
+	  background-color: #eeeeee;
+	}
+	</style>
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>
-
 	<h1>Stock Usage Form </h1>
 	<fieldset>
 		<h3>Customer</h3>
@@ -33,49 +30,38 @@ fieldset {
 		<p>Date:
 		<span th:text="${session.transaction.date}"></span></p>
 	</fieldset>
-	
 	<fieldset th:if="${not #lists.isEmpty(session.consumptions)}">
 		<h3>Parts Used</h3>
 		<div th:each="c : ${session.consumptions}">
 			<p>Part:<span th:text="${c.product.name}" style="padding-left:10px"></span><br/>Qty:<span th:text="${c.consumedQty}" style="padding-left:10px"></span></p>
 		</div>
-	</fieldset>
-	
-	
-	<form action="#" th:object="${consumption}" th:action="@{/usage/saveConsumption}"
-		method="post">
+	</fieldset>	
+	<form action="#" th:object="${consumption}" th:action="@{/usage/saveConsumption}" method="post">
 		<fieldset>
-		<p th:text="${duplicate}"></p>
+			<p th:text="${duplicate}"></p>
 			<input type="hidden" th:field="*{id}">
 		</fieldset>
-		
-
 		<fieldset>
 			Select Product
-	 	<select th:field="*{productId}">
-    <option th:each="p : ${products}" th:value="${p.productId}" th:text="${p.name}" ></option>
-    </select>
+	 		<select th:field="*{productId}">
+    			<option th:each="p : ${products}" th:value="${p.productId}" th:text="${p.name}" ></option>
+    		</select>
 		</fieldset>
-			
-     
 		<fieldset>
 			Consumed Qty<input type="number" th:field="*{consumedQty}">
 			<p th:if="${#fields.hasErrors('consumedQty')}" th:errors="*{consumedQty}"></p>
 			<p th:text="${exceedStock}"></p>
 		</fieldset>
-	
-		
 		<fieldset>
 			  <input type="submit" class="btn btn-warning btn-sm" value="Add Part" name="addpart"/> &nbsp; &nbsp; 
 			  <input type="submit" value="Commit" class="btn btn-success btn-sm" name="commit"/>
 		</fieldset>
-
 	</form>
-	<br />
-	<span th:unless="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/add}">Back</a></span>
-	<span th:if="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/removepart}">Back</a></span>
-	<div th:replace="fragments/general.html :: footer"></div>
+	<br >
+	<p><span th:unless="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/add}">Back</a></span>
+	<span th:if="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/removepart}">Back</a></span></p>
 	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
 	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
+	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>

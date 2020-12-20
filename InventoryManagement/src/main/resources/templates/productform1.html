@@ -1,33 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
-<meta charset="UTF-8" />
-<title>Product Form</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
+	<meta charset="UTF-8" />
+	<title>Product Form</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
 	<style>
-fieldset {
-  background-color: #eeeeee;
-}
-
-</style>
+	fieldset {
+	  background-color: #eeeeee;
+	}
+	</style>
 </head>
-<body>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>
-		<table width="100%" class="center">
-			<tr align="center">
-				<td width="30%"></td>
-				<td align="center" width="40%"><h1>Product Form</h1></td>
-				<td  width="30%"></td>
-			</tr>
-		</table>
+	<table width="100%" class="center">
+		<tr align="center">
+			<td width="30%"></td>
+			<td align="center" width="40%"><h1>Product Form</h1></td>
+			<td  width="30%"></td>
+		</tr>
+	</table>
 	<form action="#" th:object="${product}" th:action="@{/product/save1}" method="post">
-		
 		<fieldset>
-		<p th:text="${duplicate}"></p>
+			<p th:text="${duplicate}"></p>
 			<input type="hidden" th:field="*{productId}">
 		</fieldset>
 		<fieldset>
@@ -85,22 +81,22 @@ fieldset {
 			<input type="number" th:field="*{reorderQty}">
 			<p th:if="${#fields.hasErrors('reorderQty')}" th:errors="*{reorderQty}"></p>
 		</fieldset>
-    <fieldset>
+    	<fieldset>
 			Select Supplier
-	 	<select th:field="*{supplierId}">
-    <option th:each="s : ${suppliers}" th:value="${s.supplierId}" th:text="${s.companyName}" ></option>
-    </select>
+	 		<select th:field="*{supplierId}">
+    			<option th:each="s : ${suppliers}" th:value="${s.supplierId}" th:text="${s.companyName}" ></option>
+    		</select>
 		</fieldset>
 		<fieldset>
 			<input type="submit" class="btn btn-success" value="Save" /> &nbsp; &nbsp; <input
 				type="reset" class="btn btn-danger" value="Reset" />
 		</fieldset>
 	</form>
-	<br />
-	<div th:replace="fragments/general.html :: footer"></div>
-	<a href="AddUser.html" class="btn btn-warning" th:href="@{/product/list}">Product Page</a>
-	<br/>
+	<br>
+	<p><a href="AddUser.html" class="btn btn-warning" th:href="@{/product/list}">Product Page</a></p>
+	<br>
 	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
 	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
+	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>

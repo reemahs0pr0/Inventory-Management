@@ -1,22 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
-<meta charset="UTF-8" />
-<title>Products Listing</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
+	<meta charset="UTF-8" />
+	<title>Products Listing</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>
-		<table width="100%" class="center">
-			<tr align="center">
-				<td width="30%"></td>
-				<td align="center" width="40%"><h1 th:if="${not #lists.isEmpty(products)}">Products Listing</h1></td>
-				<td  width="30%"></td>
-			</tr>
-		</table>
+	<table width="100%" class="center">
+		<tr align="center">
+			<td width="30%"></td>
+			<td align="center" width="40%"><h1 th:if="${not #lists.isEmpty(products)}">Products Listing</h1></td>
+			<td  width="30%"></td>
+		</tr>
+	</table>
 		
 	<!-- Add Hyperlink -->
 	<a href="AddProduct.html" class="btn btn-default" th:href="@{/product/add}">Add Product</a>
@@ -39,21 +38,21 @@
 	
 	<table class="table table-striped table-hover" th:if="${not #lists.isEmpty(products)}" >
 		<thead>
-		<tr >
-		<th>Product ID</th>
-		<th>Name </th>
-		<th>Description</th>
-		<th>Type</th>
-		<th>Category</th>
-		<th>Sub Category</th>
-		<th>Original Price</th>
-		<th>WholeSale Price</th>
-		<th>Retail Price</th>
-		<th>Partner Price</th>
-		<th>MOQ</th>
-		<th>Reorder Qty</th>
-		<th>Supplier</th>
-		</tr>
+			<tr >
+				<th>Product ID</th>
+				<th>Name </th>
+				<th>Description</th>
+				<th>Type</th>
+				<th>Category</th>
+				<th>Sub Category</th>
+				<th>Original Price</th>
+				<th>WholeSale Price</th>
+				<th>Retail Price</th>
+				<th>Partner Price</th>
+				<th>MOQ</th>
+				<th>Reorder Qty</th>
+				<th>Supplier</th>
+			</tr>
 		</thead>
 
 		<tr th:each="product:${products}" class="table-row">
@@ -76,9 +75,9 @@
 				th:href="@{/product/delete/}+${product.productId}">Delete</a></td>
 		</tr>
 	</table>
-    <br/>
-	<div th:replace="fragments/general.html :: footer"></div>
+    <br>
 	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
 	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
+	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>
