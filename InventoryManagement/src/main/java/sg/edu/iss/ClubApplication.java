@@ -52,7 +52,6 @@ public class ClubApplication {
 	
 	@Autowired
 	private CarRepository crepo;
-
 	
 	@Autowired
 	private TransactionRepository trepo;
@@ -94,7 +93,7 @@ public class ClubApplication {
 			prepo.save(p1);
 			
 			Supplier s2 = new Supplier("Honda Distributors", 
-					"69 Tampines Industrial Park, Singapore 325674", "Bobby","98765432", 
+					"69 Tampines Industrial Park, Singapore 325674", "Bobby","95474334", 
 					"bobbyfir@gmail.com",  "Honda");
 			Product p2 = new Product("Turanza T005 Tyre", "a very good tyre", 
 					"expendable", "tyre", "tyre", 150, 200, 180, 170, 10, 50, s2);
@@ -103,7 +102,7 @@ public class ClubApplication {
 			prepo.save(p2);
 			
 			Supplier s3 = new Supplier("Mazda Distributors", 
-					"4 Simei Industrial Park, Singapore 346038", "Charlie", "98765432", 
+					"4 Simei Industrial Park, Singapore 346038", "Charlie", "91245526", 
 					"chaplin@gmail.com",  "Mazda");
 			Product p3 = new Product("Ultra shade", "provide sun shade", 
 					"accessories", "visor", "door visor", 150, 200, 180, 170, 10, 50, s3);
@@ -112,7 +111,7 @@ public class ClubApplication {
 			prepo.save(p3);
 			
 			Supplier s4 = new Supplier("Hyundai Distributors", 
-					"89 Toa Payoh Industrial Park, Singapore 234086", "Park", "98765432", 
+					"89 Toa Payoh Industrial Park, Singapore 234086", "Park", "85676245", 
 					"jisung@gmail.com",  "Hyundai");
 			Product p4 = new Product("The Powerful Light", "lighting for the car", 
 					"electrical", "light", "headlight", 210, 260, 240, 230, 10, 50, s4);
@@ -121,7 +120,7 @@ public class ClubApplication {
 			prepo.save(p4);
 			
 			Supplier s5 = new Supplier("Lexus Distributors", 
-					"12 Kallang Industrial Park, Singapore 644009", "Biscuit", "98765432", 
+					"12 Kallang Industrial Park, Singapore 644009", "Biscuit", "86535621", 
 					"cracker@gmail.com",  "Lexus");
 			Product p5 = new Product("Steel Rim", "tyre rim", 
 					"expendable", "rim", "rim", 200, 250, 230, 220, 10, 50, s5);
@@ -130,7 +129,7 @@ public class ClubApplication {
 			prepo.save(p5);
 			
 			Supplier s6 = new Supplier("Kia Distributors", 
-					"4 Geylang Industrial Park, Singapore 213084", "Pai", "98765432", 
+					"4 Geylang Industrial Park, Singapore 213084", "Pai", "93565743", 
 					"paikia@gmail.com",  "Kia");
 			Product p6 = new Product("Auto gear box", "gear box for auto car", 
 					"mechanical", "gearbox", "auto gearbox", 500, 550, 530, 520, 10, 
@@ -140,7 +139,7 @@ public class ClubApplication {
 			prepo.save(p6);
 			
 			Supplier s7 = new Supplier("BMW Distributors", 
-					"Bukit Timah Industrial Park, Singapore 570934", "Richman", "98765432", 
+					"Bukit Timah Industrial Park, Singapore 570934", "Richman", "95425642", 
 					"iamrich@gmail.com",  "BMW");
 			Product p7 = new Product("Model RTX clutch", "2020 clutch model", 
 					"mechanical", "clutch", "clutch", 340, 390, 370, 360, 10, 50, s7);
@@ -150,7 +149,7 @@ public class ClubApplication {
 			
 			Supplier s8 = new Supplier("Mercedes Distributors", 
 					"45 Queenstown Industrial Park, Singapore 363095", "Hamilton", 
-					"98765432", "lewis@gmail.com", "Mercedes");
+					"92365325", "lewis@gmail.com", "Mercedes");
 			Product p8 = new Product("Gold Dashboard", "dashboard for the rich", 
 					"accessories", "board", "dashboard", 140, 190, 170, 160, 10, 50, s8);
 			s8.addProduct(p8);
@@ -158,7 +157,7 @@ public class ClubApplication {
 			prepo.save(p8);
 			
 			Supplier s9 = new Supplier("Audi Distributors", 
-					"76 Jurong Industrial Park, Singapore 630345", "Ken", "98765432", 
+					"76 Jurong Industrial Park, Singapore 630345", "Ken", "98758345", 
 					"watanabe@gmail.com",  "Audi");
 			Product p9 = new Product("The door", "strong door", 
 					"accessories", "door", "driver door", 240, 290, 270, 260, 10, 50, s9);
@@ -167,7 +166,7 @@ public class ClubApplication {
 			prepo.save(p9);
 			
 			Supplier s10 = new Supplier("Nissan Distributors", 
-					"67 Woodlands Industrial Park, Singapore 585340", "Sunny", "98765432", 
+					"67 Woodlands Industrial Park, Singapore 585340", "Sunny", "86378794", 
 					"sunny@gmail.com",  "Nissan");
 			Product p10 = new Product("Steering Wheel", "wheel for steering", 
 					"accessories", "steering wheel", "powered steering wheel", 230, 280, 

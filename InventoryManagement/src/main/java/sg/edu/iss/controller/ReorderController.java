@@ -1,6 +1,6 @@
 package sg.edu.iss.controller;
 
-import java.time.LocalDate;  
+import java.time.LocalDate; 
 import java.util.List;
 
 import javax.validation.Valid;
@@ -107,7 +107,8 @@ public class ReorderController {
 	
 	// save stock entry form 
 	@RequestMapping(value= "/processform/{id}", params="saveSEForm", method = RequestMethod.POST)
-	public String saveSEForm(@PathVariable("id") Integer id, @ModelAttribute("reorder") @Valid Reorder reorder, BindingResult result, Model model) {
+	public String saveSEForm(@PathVariable("id") Integer id, @ModelAttribute("reorder") @Valid Reorder reorder, 
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "seformedit";
 		}
@@ -123,7 +124,8 @@ public class ReorderController {
 	
 	// add to inventory 
 	@RequestMapping(value= "/processform/{id}", params="addToInventory", method = RequestMethod.POST)
-	public String addToInventory(@PathVariable("id") Integer id, @ModelAttribute("reorder") @Valid Reorder reorder, BindingResult result, Model model) {
+	public String addToInventory(@PathVariable("id") Integer id, @ModelAttribute("reorder") @Valid Reorder reorder, 
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "seformedit";
 		}

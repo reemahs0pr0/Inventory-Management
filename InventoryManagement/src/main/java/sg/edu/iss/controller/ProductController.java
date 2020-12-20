@@ -1,6 +1,6 @@
 package sg.edu.iss.controller;
 
-import java.util.List;
+import java.util.List; 
 import sg.edu.iss.model.ProductStatus;
 import javax.validation.Valid;
 import sg.edu.iss.repo.StockRepository;
@@ -46,46 +46,36 @@ public class ProductController {
 		this.supservice =supserviceimpl;
 	}
 	
-	
-	
 	@RequestMapping(value="/list")
-	public String listProducts(Model model, @Param("keyword") String keyword)
-	
-	{
+	public String listProducts(Model model, @Param("keyword") String keyword) {
 		List<Product> products = proservice.listAll(keyword);
 		model.addAttribute("products", products);
 		model.addAttribute("keyword", keyword);
 		return "products";
 	}
-	
 
 	@RequestMapping(value = "/add")
-	public String addProduct(Model model)
-	{
+	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 		return "productform";
 	}
 	
-	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("product") @Valid Product product,BindingResult bindingResult,  Model model) {
-	   
-		if (bindingResult.hasErrors()) 
-		{	
+	public String saveProduct(@ModelAttribute("product") @Valid Product product, 
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {	
 			model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 			return "productform";
 		}
-		else if(proservice.findProductbyName(product.getName()) !=null 
-				&& proservice.findProductbyName(product.getName()).getStatus() == ProductStatus.IN_USE)
-		{   
+		else if(proservice.findProductbyName(product.getName()) != null 
+				&& proservice.findProductbyName(product.getName()).getStatus() == ProductStatus.IN_USE) {   
 			model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 			model.addAttribute("duplicate", "The product name already exists");
 			return "productform";
 		}
-		
 		else {
-		// to add supplier inside the product by the Id parsed from form 
+		 // to add supplier inside the product by the Id parsed from form 
 		 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
 		 //adding product into corresponding supplier
 		 Supplier correspondingSupplier =supservice.findSupplierbyId(product.getSupplierId());
@@ -96,23 +86,18 @@ public class ProductController {
 		 return "forward:/product/list";
 		}
 	}
-	
-	
 
 	@RequestMapping(value = "/edit/{id}")
-	public String editProduct(@PathVariable("id") Integer id, Model model)
-	{
-		
+	public String editProduct(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("product", proservice.findProductbyId(id));
-		model.addAttribute("suppliers",supservice.findAllSuppliers());
-		return "productform1";
-		
+		model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
+		return "productform1";	
 	}
 	
 	//for edited product
 	@RequestMapping(value = "/save1", method = RequestMethod.POST)
-	public String saveeditedProduct(@ModelAttribute("product") @Valid Product product,BindingResult bindingResult,  Model model) {
-
+	public String saveeditedProduct(@ModelAttribute("product") @Valid Product product, 
+			BindingResult bindingResult, Model model) {
 		Product prevProduct=proservice.findProductbyId(product.getProductId());
 		Product newProduct=(Product) model.getAttribute("product");
 		if (bindingResult.hasErrors()) {	
@@ -120,7 +105,7 @@ public class ProductController {
 			return "productform1";
 		}
 		else if(!prevProduct.getName().equalsIgnoreCase(newProduct.getName())) {   
-			if(proservice.findProductbyName(product.getName()) !=null && 
+			if(proservice.findProductbyName(product.getName()) != null && 
 					proservice.findProductbyName(product.getName()).getStatus() == ProductStatus.IN_USE) {   
 				model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 				model.addAttribute("duplicate", "The product name already exists");
@@ -155,13 +140,11 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/delete/{id}")
- 	public String deleteProduct(@PathVariable("id") Integer id) 
-	{
-		if(proservice.findProductbyId(id).getStock()==null ||  
-				(proservice.findProductbyId(id).getStock().getUnits()==0 && 
+ 	public String deleteProduct(@PathVariable("id") Integer id) {
+		if(proservice.findProductbyId(id).getStock() == null ||  
+				(proservice.findProductbyId(id).getStock().getUnits() == 0 && 
 				proservice.findProductbyId(id).getConsumptions().isEmpty() && 
-				proservice.findProductbyId(id).getReorders().isEmpty()))
-		{	
+				proservice.findProductbyId(id).getReorders().isEmpty())) {	
 			proservice.deleteProduct(proservice.findProductbyId(id));
 			return "forward:/product/list";
 		}

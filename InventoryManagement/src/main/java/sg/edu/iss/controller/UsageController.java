@@ -1,6 +1,6 @@
 package sg.edu.iss.controller;
 
-import java.time.LocalDate;
+import java.time.LocalDate;  
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import sg.edu.iss.model.Car;
 import sg.edu.iss.model.Consumption;
 import sg.edu.iss.model.Product;
-import sg.edu.iss.model.ProductStatus;
 import sg.edu.iss.model.RoleType;
-import sg.edu.iss.model.Supplier;
-import sg.edu.iss.model.SupplierStatus;
 import sg.edu.iss.model.Transaction;
-import sg.edu.iss.repo.StockRepository;
 import sg.edu.iss.service.ConsumptionService;
 import sg.edu.iss.service.ConsumptionServiceImpl;
 import sg.edu.iss.service.ProductService;
@@ -48,20 +44,16 @@ public class UsageController {
 	public void setProductService(ProductServiceImpl productServiceImpl) {
 		this.proservice =productServiceImpl;
 	}
-
 	
 	@Autowired
-	public void setConsumptionService(ConsumptionServiceImpl conServiceImpl)
-	{
+	public void setConsumptionService(ConsumptionServiceImpl conServiceImpl) {
 		this.conservice=conServiceImpl;
 	}
-	
 	
 	@Autowired
 	public void setTransservice(TransactionServiceImpl tranServiceImpl) {
 		this.transservice = tranServiceImpl;
 	}
-	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addtransaction(Model model) {
@@ -74,14 +66,12 @@ public class UsageController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveUsage(@ModelAttribute("transaction") @Valid Transaction transaction,BindingResult bindingResult, 
-			Model model, HttpSession session) {
-	    
+			Model model, HttpSession session) {    
 		if (bindingResult.hasErrors()) {	
 			System.out.println(bindingResult);
 			List<Car> cars = conservice.findallCars();
 			model.addAttribute("transaction", transaction);
 			model.addAttribute("cars", cars);
-		
 			return "selectcustomer";
 		}
 		else {
@@ -94,15 +84,13 @@ public class UsageController {
 		 
 	}
 	
-	
 	@RequestMapping(value = "/addConsumption")
 	public String addConsumption(Model model, HttpSession session) {
 		session.setAttribute("consumptions", new ArrayList<Consumption>());
 		Consumption consumption = new Consumption();
-		List<Product> products = proservice.findAllProducts();
+		List<Product> products = proservice.listAll(null);
 		model.addAttribute("consumption", consumption);
 		model.addAttribute("products", products);
-	
 		return "stockusageform";
 	}
 	
@@ -112,7 +100,7 @@ public class UsageController {
 		consumptions.remove(consumptions.size()-1);
 		session.setAttribute("consumptions", consumptions);
 		Consumption consumption = new Consumption();
-		List<Product> products = proservice.findAllProducts();
+		List<Product> products = proservice.listAll(null);
 		model.addAttribute("consumption", consumption);
 		model.addAttribute("products", products);
 		return "stockusageform";
@@ -120,18 +108,15 @@ public class UsageController {
 	
 	@RequestMapping(value = "/saveConsumption", params="addpart", method = RequestMethod.POST)
 	public String addPart(@ModelAttribute("consumption") @Valid Consumption consumption,BindingResult bindingResult, 
-			Model model, HttpSession session) {
-	
-	    
-		if (bindingResult.hasErrors()) 
-		{	
-			List<Product> products = proservice.findAllProducts();
+			Model model, HttpSession session) {	    
+		if (bindingResult.hasErrors()) {	
+			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
 			return "stockusageform";
 		}
 		else if (conservice.isExceedingStock(consumption)) {
-			List<Product> products = proservice.findAllProducts();
+			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
 			Product product= proservice.findProductbyId(consumption.getProductId());
@@ -150,13 +135,12 @@ public class UsageController {
 			session.setAttribute("consumptions", consumptions);
 
 			Consumption newConsumption = new Consumption();
-			List<Product> products = proservice.findAllProducts();
+			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption", newConsumption);
 			model.addAttribute("products", products);
 		
 			return "stockusageform";
-		}
-		
+		}	
 		 
 	}
 	
@@ -167,13 +151,13 @@ public class UsageController {
 	    
 		if (bindingResult.hasErrors()) 
 		{	
-			List<Product> products = proservice.findAllProducts();
+			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
 			return "stockusageform";
 		}
 		else if (conservice.isExceedingStock(consumption)) {
-			List<Product> products = proservice.findAllProducts();
+			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
 			Product product= proservice.findProductbyId(consumption.getProductId());

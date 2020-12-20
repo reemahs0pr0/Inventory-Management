@@ -32,8 +32,8 @@
 	<tr><td>MOQ</td><td th:text=${product.MOQ}>MOQ</td></tr>
 	<tr><td>Supplier Name</td><td th:text=${product.supplier.companyName}>Supplier Name</td></tr>
 	<tr><td>Reorder Qty</td><td th:text=${product.reorderQty}>Reorder Qty</td></tr>
-	<tr><td>Units-In-Stock</td><td th:text="${stock.units}">Units</td></tr>
-	<tr><td>Stock Status</td><td th:text="${stock.status}">Stock Status</td></tr>
+	<tr><td>Units-In-Stock</td><td th:text="${product.stock.units}">Units</td></tr>
+	<tr><td>Stock Status</td><td th:text="${product.stock.status}">Stock Status</td></tr>
 </table>
 
 <p>
