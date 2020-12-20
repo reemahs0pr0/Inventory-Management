@@ -6,10 +6,39 @@
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/style.css" th:href="@{/css/style.css}" />
 </head>
-<body>				
-<form action="http://localhost:8080/searchusage" method="get">Date From: <input type="date" name="datefrom" id="datefrom" max="2020-12-16" >
-	 To: <input type="date" name="dateto" id="dateto" max="2020-12-16">
-  	  <input type="submit" id="report" value="Generate Report" formtarget="_blank"></form>
+<body>
+
+<label for="start">Start date:</label>
+
+
+<form th:action="@{/catalog/transactionhistory/{id}/filter(id=${id})}">
+    Start: <input type="date" id="start" name="start" th:value="${start}" th:max="${today}">
+    &nbsp;
+    End: <input type="date" id="end" name="end" th:value="${end}" th:max="${today}">
+    <input type="submit" value="Search" onclick="return myFunction()" />
+    &nbsp;
+    <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+    
+    <input type="submit" value="Generate Report" id="generate" th:formaction="@{/catalog/transactionhistory/{id}/filter/report(id=${id})}" onclick="return myFunction()"  />
+	</form>   
+	 
+
+	<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/catalog/transactionhistory/{id}(id=${id})}]]";
+    }
+    
+    function myFunction() {
+    	  var x = document.getElementById("start").value;
+    	  var y= document.getElementById("end").value;
+    	  if (x > y)
+    	  { 
+          alert("End date must not be before start date");
+          return false;
+    	  }
+    	 return true;
+    	}
+	</script>
 		
 			
 <table class="table1">
@@ -22,15 +51,13 @@
 		<th>Consumed Qty</th>
 		</tr>
 
- 
 	<th:block th:each = "c : ${consumptions}">  
-      <th:block th:each = "t: ${transactions}">
        <tr> 
        	 <td th:text = "${c.id}">Id</td>
-       	 <td th:text= "${t.date}">Date</td>
-         <td th:text="${t.car.brand}">CBrand</td>
-          <td th:text="${t.car.model}">CModel</td>
-          <td th:text="${t.car.ownerName}">CName</td>
+       	 <td th:text= "${c.transaction.date}">Date</td>
+         <td th:text="${c.transaction.car.brand}">CBrand</td>
+          <td th:text="${c.transaction.car.model}">CModel</td>
+          <td th:text="${c.transaction.car.ownerName}">CName</td>
           <td th:text="${c.consumedQty}">consumed</td>
              </tr>
       </th:block>
@@ -39,11 +66,13 @@
 
 
    </table>    
-	
+        <h2 th:if="${#lists.isEmpty(consumptions)}">The transactions do not exist in selected daterange.</h2>
 
 
 <p>
 <a href="Home" th:href="@{/catalog/list}">Back to Catalog</a></p>
-
+<br/>
+<span th:if="${session.session == 'admin'}"><a href="Home" th:href="@{/user/home/admin}">Home</a></span>
+<span th:if="${session.session == 'mechanic'}"><a href="Home" th:href="@{/user/home/mechanic}">Home</a></span>
 </body>
 </html>

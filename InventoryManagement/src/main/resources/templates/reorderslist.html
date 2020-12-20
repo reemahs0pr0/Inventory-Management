@@ -1,31 +1,38 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
+<head th:fragment="headerfiles">
+<meta charset="UTF-8" />
+<title>Reorders List</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-<title>Reorder Page</title>
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" media="all" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<header th:insert="fragments/general.html :: header"></header>
+	<header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>
-	<h1>Manage Orders</h1>
+		<table width="100%" class="center">
+			<tr align="center">
+				<td width="30%"></td>
+				<td align="center" width="40%"><h1>Manage Orders</h1></td>
+				<td  width="30%"></td>
+			</tr>
+		</table>
 	
 	<!-- Generate list of orders needed to be reordered -->
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>ORDER ID</th>
-				<th>SUPPLIER</th>
-				<th>NAME</th>
-				<th>UNIT PRICE</th>
-				<th>STOCK UNITS</th>
-				<th>REORDER QTY</th>
-				<th>MIN ORDER QTY</th>
-				<th>ORDER QTY</th>
-				<th>DAMAGED QTY</th>
-				<th>LAST REORDER DATE</th>
-				<th>ORDER STATUS</th>
+				<th>Order ID</th>
+				<th>Supplier</th>
+				<th>Name</th>
+				<th>Unit Price</th>
+				<th>Stock Units</th>
+				<th>Reorder Qty</th>
+				<th>Min Order Qty</th>
+				<th>Order Qty</th>
+				<th>Damaged Qty</th>
+				<th>Last Reorder Date</th>
+				<th>Order Status</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -48,26 +55,26 @@
 			<td th:text="${reorder.status}">Default</td>
 			<td>
 				<div th:if="${reorder.status.name() == 'PENDING_ORDER'}">
-					<button th:onclick="|window.location.href='@{/reorders/viewform/{id}(id = ${reorder.id})}'|">Reorder Form</button>
+					<button class="btn btn-danger" th:onclick="|window.location.href='@{/reorders/viewform/{id}(id = ${reorder.id})}'|">Reorder Form</button>
 				</div>
 				<div th:unless="${reorder.status.name() == 'PENDING_ORDER'}">
-					<button th:onclick="|window.location.href='@{/reorders/vieworder/{id}(id = ${reorder.id})}'|">View Order</button>
+					<button class="btn btn-success" th:onclick="|window.location.href='@{/reorders/vieworder/{id}(id = ${reorder.id})}'|">View Order</button>
 				</div>
 			</td>
 			<td>
 				<div th:if="${reorder.status.name() == 'PENDING_ORDER'}"></div>
 				<div th:if="${reorder.status.name() == 'REORDERED'}"></div>
 				<div th:if="${reorder.status.name() == 'RECEIVED'}">
-					<button th:onclick="|window.location.href='@{/reorders/editseform/{id}(id = ${reorder.id})}'|">Edit SE Form</button>
+					<button class="btn btn-warning" th:onclick="|window.location.href='@{/reorders/editseform/{id}(id = ${reorder.id})}'|">Edit SE Form</button>
 				</div>
 				<div th:if="${reorder.status.name() == 'ADDED_TO_INVENTORY'}">
-					<button th:onclick="|window.location.href='@{/reorders/viewseform/{id}(id = ${reorder.id})}'|">View SE Form</button>
+					<button class="btn btn-primary" th:onclick="|window.location.href='@{/reorders/viewseform/{id}(id = ${reorder.id})}'|">View SE Form</button>
 				</div>
 			</td>
 		</tr>			
 	</table>
 	<div th:replace="fragments/general.html :: footer"></div>
-	<span th:if="${session.session == 'admin'}"><a href="Home" th:href="@{/user/home/admin}">Home</a></span>
-	<span th:if="${session.session == 'mechanic'}"><a href="Home" th:href="@{/user/home/mechanic}">Home</a></span>
+	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
+	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
 </body>
 </html>			

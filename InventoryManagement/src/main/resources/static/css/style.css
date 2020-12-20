@@ -1,5 +1,18 @@
+header {
+  height: 200px;
+  padding: 10px 0 10px 0;
+
+  background: #003366;
+
+  background-attachment: fixed, fixed, fixed, scroll;
+  background-position: 0 0, 0 0, -5px -25px, 0 50%;
+  background-repeat: repeat, repeat, repeat, no-repeat;
+  background-size: auto, auto, auto, cover;
+  text-align: center;
+}
+
 BODY {
-	font-family : calbiri ;
+	font-family : segoe ui ;
 	font-size : 10pt;
 	
 }
@@ -21,7 +34,6 @@ h1 {
 	position: relative;  
 	font-size: 21px;
 	line-height: 60px;
-	padding: 15px 15px 15px 15%;
 	color: #355681;
 }
 
@@ -61,13 +73,13 @@ h4 {
 }
 
 button {
-	border : thin;
+	border : none;
 	border-style : none none none none;
 	background : transparent;
 	margin : 0px 0px 0px 0px;
 	padding : 0px 0px 0px 0px;
 	white-space : normal;
-	width : auto;
+	width : 100%;
 }
 
 frame	{
@@ -123,6 +135,7 @@ td
 	padding: 9px 8px 0px 8px;
 	
 }
+
 tbody tr:hover td
 {
 	color: #009;
