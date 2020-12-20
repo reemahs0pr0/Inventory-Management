@@ -299,8 +299,12 @@ public class Product {
 		return reorders;
 	}
 
-
-
+	public void setReorders(List<Reorder> reorders) {
+		this.reorders = reorders;
+	}
+	public void addReorder(Reorder reorder) {
+		reorders.add(reorder);
+	}
 
 	@Override
 	public String toString() {

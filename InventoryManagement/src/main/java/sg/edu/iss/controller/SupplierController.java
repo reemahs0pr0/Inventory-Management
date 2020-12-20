@@ -32,7 +32,6 @@ public class SupplierController {
 		this.supservice =supserviceimpl;
 	}
 	
-	
 	@RequestMapping(value="/list")
 	public String listSuppliers(Model model) {
 		model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));

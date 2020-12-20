@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import sg.edu.iss.model.Reorder;
+import sg.edu.iss.service.ProductService;
+import sg.edu.iss.service.ProductServiceImpl;
 import sg.edu.iss.service.ReorderImplementation;
 import sg.edu.iss.service.ReorderInterface;
 
@@ -24,10 +26,18 @@ public class ReorderController {
 
 	@Autowired
 	private ReorderInterface rservice;
+	
+	@Autowired
+	private ProductService proservice;
 
 	@Autowired
 	public void setReorderImplementation(ReorderImplementation rimpl) {
 		this.rservice = rimpl;
+	}
+	
+	@Autowired
+	public void setProductService(ProductServiceImpl productServiceImpl) {
+		this.proservice = productServiceImpl;
 	}
 	
 	// User requests to view the list of orders made
@@ -65,6 +75,9 @@ public class ReorderController {
 			rservice.updateOrderStatus(reorder);
 			// update 
 			rservice.addDate(reorder);
+			//add reorder to product
+			reorder.getProduct().addReorder(reorder);
+			proservice.saveProduct(reorder.getProduct());
 			// return reorders list
 			return "forward:/reorders/list";
 		}

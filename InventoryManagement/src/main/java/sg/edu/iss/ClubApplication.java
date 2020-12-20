@@ -232,39 +232,53 @@ public class ClubApplication {
 			r1.setDamagedQty(2);
 			r1.setDateReceived(LocalDate.parse("09/05/2020", df));
 			rrepo.save(r1);
+			p1.addReorder(r1);
+			prepo.save(p1);
 			
 			Reorder r2 = new Reorder(p4, OrderStatus.ADDED_TO_INVENTORY, 0, 50);
 			r2.setDate(LocalDate.parse("06/05/2020", df));
 			r2.setDamagedQty(4);
 			r2.setDateReceived(LocalDate.parse("09/05/2020", df));
 			rrepo.save(r2);
+			p4.addReorder(r2);
+			prepo.save(p4);
 			
 			Reorder r3 = new Reorder(p8, OrderStatus.ADDED_TO_INVENTORY, 5, 50);
 			r3.setDate(LocalDate.parse("06/05/2020", df));
 			r3.setDamagedQty(1);
 			r3.setDateReceived(LocalDate.parse("09/05/2020", df));
 			rrepo.save(r3);
+			p8.addReorder(r3);
+			prepo.save(p8);
 			
 			Reorder r4 = new Reorder(p9, OrderStatus.ADDED_TO_INVENTORY, 2, 50);
 			r4.setDate(LocalDate.parse("06/05/2020", df));
 			r4.setDamagedQty(3);
 			r4.setDateReceived(LocalDate.parse("09/05/2020", df));
 			rrepo.save(r4);
+			p9.addReorder(r4);
+			prepo.save(p9);
 			
 			Reorder r5 = new Reorder(p10, OrderStatus.ADDED_TO_INVENTORY, 5, 50);
 			r5.setDate(LocalDate.parse("06/05/2020", df));
 			r5.setDamagedQty(5);
 			r5.setDateReceived(LocalDate.parse("09/05/2020", df));
 			rrepo.save(r5);
+			p10.addReorder(r5);
+			prepo.save(p10);
 			
 			Reorder r6 = new Reorder(p2, OrderStatus.RECEIVED, 0, 60);
 			r6.setDate(LocalDate.parse("06/12/2020", df));
 			r6.setDateReceived(LocalDate.parse("09/12/2020", df));
 			rrepo.save(r6);
+			p2.addReorder(r6);
+			prepo.save(p2);
 			
 			Reorder r7 = new Reorder(p3, OrderStatus.REORDERED, 5, 55);
 			r7.setDate(LocalDate.parse("06/12/2020", df));
 			rrepo.save(r7);
+			p3.addReorder(r7);
+			prepo.save(p3);
 			
 			rrepo.save(new Reorder(p5, OrderStatus.PENDING_ORDER, 5, 50));
 			rrepo.save(new Reorder(p6, OrderStatus.PENDING_ORDER, 9, 50));

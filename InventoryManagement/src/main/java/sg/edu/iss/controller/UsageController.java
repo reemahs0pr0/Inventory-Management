@@ -42,12 +42,12 @@ public class UsageController {
 	
 	@Autowired
 	public void setProductService(ProductServiceImpl productServiceImpl) {
-		this.proservice =productServiceImpl;
+		this.proservice = productServiceImpl;
 	}
 	
 	@Autowired
 	public void setConsumptionService(ConsumptionServiceImpl conServiceImpl) {
-		this.conservice=conServiceImpl;
+		this.conservice = conServiceImpl;
 	}
 	
 	@Autowired
@@ -147,10 +147,7 @@ public class UsageController {
 	@RequestMapping(value = "/saveConsumption", params="commit", method = RequestMethod.POST)
 	public String commitUsage(@ModelAttribute("consumption") @Valid Consumption consumption, BindingResult bindingResult, 
 			Model model, HttpSession session) {
-	
-	    
-		if (bindingResult.hasErrors()) 
-		{	
+		if (bindingResult.hasErrors()) {	
 			List<Product> products = proservice.listAll(null);
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
@@ -186,11 +183,9 @@ public class UsageController {
 				proservice.saveProduct(p);
 				conservice.updateStock(c);
 			}
-			
 			if(session.getAttribute("session") == RoleType.ADMIN) {
 				return "adminmain";
 			}
-		
 			return "mechanicmain";
 		}
 		 
