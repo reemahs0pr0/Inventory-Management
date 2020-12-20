@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import sg.edu.iss.model.Consumption;
 
 public interface ConsumptionRepository extends JpaRepository<Consumption, Integer> {
-   @Query("Select c from Consumption c where c.product.productId = :id")
+    @Query("Select c from Consumption c where c.product.productId = :id")
 	List<Consumption> findConsumptionByProductId(@Param("id")Integer id);
    
     @Query("Select c from Consumption c where c.transaction = :id")
