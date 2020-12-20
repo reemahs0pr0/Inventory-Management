@@ -32,7 +32,7 @@ fieldset {
 		
 
 		<fieldset>
-			<h3>Select Car</h3>
+			<h3>Select Car/Owner</h3>
 	 	<select th:field="*{carId}">
     <option th:each="c : ${cars}" th:value="${c.id}" th:text="${c}" ></option>
     </select>

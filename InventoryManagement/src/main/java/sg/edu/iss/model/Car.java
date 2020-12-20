@@ -63,8 +63,8 @@ public class Car {
 	}
 	@Override
 	public String toString() {
-		return "Car [id=" + id + ", brand=" + brand + ", model=" + model + ", ownerName=" + ownerName + ", ownerPhone="
-				+ ownerPhone + ", ownerEmail=" + ownerEmail + "]";
+		return "Car: " + brand + " " + model + ", Owner: " + ownerName + ", Phone: "
+				+ ownerPhone + ", Email: " + ownerEmail;
 	}
 	@Override
 	public int hashCode() {

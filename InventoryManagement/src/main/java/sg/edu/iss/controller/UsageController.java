@@ -134,7 +134,10 @@ public class UsageController {
 			List<Product> products = proservice.findAllProducts();
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
-			model.addAttribute("exceedStock", "Qty is greater than stock");
+			Product product= proservice.findProductbyId(consumption.getProductId());
+			int stock = product.getStock().getUnits();
+			String errmessage = "Only " + stock + " units left in stock";
+			model.addAttribute("exceedStock", errmessage);
 			return "stockusageform";
 		}
 		else {
@@ -173,7 +176,10 @@ public class UsageController {
 			List<Product> products = proservice.findAllProducts();
 			model.addAttribute("consumption",consumption);
 			model.addAttribute("products",products);
-			model.addAttribute("exceedStock", "Qty is greater than stock");
+			Product product= proservice.findProductbyId(consumption.getProductId());
+			int stock = product.getStock().getUnits();
+			String errmessage = "Only " + stock + " units left in stock";
+			model.addAttribute("exceedStock", errmessage);
 			return "stockusageform";
 		}
 		else {
