@@ -1,6 +1,6 @@
 package sg.edu.iss.repo;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import sg.edu.iss.model.User;
+
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> 
-{
+public interface UserRepository extends JpaRepository<User, Integer> {
 	 
 	 @Query("SELECT u FROM User u WHERE u.userName=:name")
 	 User findByUserName(@Param("name")String name);

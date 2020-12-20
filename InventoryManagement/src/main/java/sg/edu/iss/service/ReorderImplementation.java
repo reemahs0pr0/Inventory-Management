@@ -1,6 +1,6 @@
 package sg.edu.iss.service;
 
-import java.time.LocalDate;   
+import java.time.LocalDate;    
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +31,14 @@ public class ReorderImplementation implements ReorderInterface {
 	public List<Reorder> list() {
 		return rrepo.findAll();
 	}
-	
-	// same as above method
-	@Override
-	public List<Reorder> getAllReorders() {
-		// TODO Auto-generated method stub
-		return rrepo.findAll();
-	}
 
 	@Override
 	public Reorder getReorderById(int id) {
-		// TODO Auto-generated method stub
 		return rrepo.findById(id).get();
 	}
 	
 	@Override
 	public void updateOrderQty(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		dbReorder.setOrderQty(reorder.getOrderQty());
 		dbReorder.setStockUnits(dbReorder.getProduct().getStock().getUnits());
@@ -58,7 +49,6 @@ public class ReorderImplementation implements ReorderInterface {
 
 	@Override
 	public void updateOrderStatus(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		if (dbReorder.getStatus() == OrderStatus.PENDING_ORDER) {
 			dbReorder.setStatus(OrderStatus.REORDERED);
@@ -74,7 +64,6 @@ public class ReorderImplementation implements ReorderInterface {
 
 	@Override
 	public void addDate(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		LocalDate dateOrdered = LocalDate.now();
 		dbReorder.setDate(dateOrdered);
@@ -83,7 +72,6 @@ public class ReorderImplementation implements ReorderInterface {
 	
 	@Override
 	public void updateDateReceived(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		LocalDate dateReceived = LocalDate.now();
 		dbReorder.setDateReceived(dateReceived);
@@ -92,7 +80,6 @@ public class ReorderImplementation implements ReorderInterface {
 
 	@Override
 	public void updateDamagedQty(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		dbReorder.setDamagedQty(reorder.getDamagedQty());
 		rrepo.flush();
@@ -100,7 +87,6 @@ public class ReorderImplementation implements ReorderInterface {
 
 	@Override
 	public void updateDamagedDescription(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId());
 		dbReorder.setDamagedDescription(reorder.getDamagedDescription());
 		rrepo.flush();
@@ -108,7 +94,6 @@ public class ReorderImplementation implements ReorderInterface {
 	
 	@Override
 	public boolean isOrderable(Reorder reorder) {
-		// TODO Auto-generated method stub
 		Reorder dbReorder = getReorderById(reorder.getId()); 
 		if (reorder.getOrderQty() >= dbReorder.getProduct().getMOQ()) {
 			return true; 
@@ -128,6 +113,5 @@ public class ReorderImplementation implements ReorderInterface {
 		dbReorder.getProduct().getStock().setStatus(StockStatus.IN_STOCK);
 		strepo.flush();
 	}
-
 	
 }

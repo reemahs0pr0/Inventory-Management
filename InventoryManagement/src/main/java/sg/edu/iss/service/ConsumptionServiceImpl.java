@@ -1,12 +1,10 @@
 package sg.edu.iss.service;
 
-import java.time.LocalDate; 
+import java.time.LocalDate;  
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import sg.edu.iss.model.Transaction;
-import sg.edu.iss.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,10 +58,8 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 	@Override
 	public List<Consumption> listConsumptionsbyProductId(int productid) {
 		return conrepo.findConsumptionByProductId(productid);
-
 	}
 
-	
 	@Override
 	public List<Consumption> findConsumptionByTranAndProId(Integer tid, Integer pid) {
 		// TODO Auto-generated method stub
@@ -71,28 +67,22 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 	}
 
 	@Override
-	public List<Consumption> findConsumptionByTransactionIdwithDate(Integer id, @DateTimeFormat(iso=ISO.DATE)LocalDate start, @DateTimeFormat(iso=ISO.DATE)LocalDate end) {
+	public List<Consumption> findConsumptionByTransactionIdwithDate(Integer id, 
+			@DateTimeFormat(iso=ISO.DATE)LocalDate start, @DateTimeFormat(iso=ISO.DATE)LocalDate end) {
 		List<Transaction> transactionsfound = tranrepo.findTransactionByDateRange(start, end);
 		List<Consumption> consumptionsfound = new ArrayList<Consumption>();
-		for(Transaction t:transactionsfound)
-		{
-			
-			for(Consumption c: conrepo.findConsumptionByTranAndProId(t.getId(), id))
-			{
+		for(Transaction t:transactionsfound) {
+			for(Consumption c: conrepo.findConsumptionByTranAndProId(t.getId(), id)) {
 				consumptionsfound.add(c);
 			}
 		}
 		return consumptionsfound;
-		
-	
 	}
-
 
 	@Override
 	public List<Car> findallCars() {
 		return carrepo.findAll();
 	}
-
 
 	@Override
 	public void saveConsumption(Consumption consumption) {
@@ -101,10 +91,8 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 	
 	@Override
 	public Consumption getConsumptionById(int id) {
-		// TODO Auto-generated method stub
 		return conrepo.findById(id).get();
 	}
-
 
 	@Override
 	public void updateStock(Consumption consumption) {
@@ -167,7 +155,6 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 		}
 		return false;
 	}
-
 	
 }
 

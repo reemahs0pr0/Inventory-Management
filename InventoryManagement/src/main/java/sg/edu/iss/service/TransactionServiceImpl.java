@@ -1,13 +1,12 @@
 package sg.edu.iss.service;
 
-import java.time.LocalDate;
+import java.time.LocalDate;  
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.model.Car;
-import sg.edu.iss.model.Consumption;
 import sg.edu.iss.model.Transaction;
 import sg.edu.iss.repo.CarRepository;
 import sg.edu.iss.repo.ConsumptionRepository;
@@ -25,36 +24,25 @@ public class TransactionServiceImpl implements TransactionService {
 	@Autowired
 	CarRepository carepo;
 	
-	
-
 	@Override
 	public List<Transaction> findTransactionByDateRange(LocalDate start, LocalDate end) {
-	
 		return tranrepo.findTransactionByDateRange(start, end);
 	}
 
-
-
-//---------------------------------------------------------------------------------------
 	@Override
 	public boolean saveTransaction(Transaction transaction) {
-		if(tranrepo.save(transaction)!=null)
-		{return true;}
-		else 
-		{
+		if(tranrepo.save(transaction)!=null) {
+			return true;
+		}
+		else {
 			return false;
 		}
 	}
 
-
-
 	@Override
 	public Car findCarbyId(int Id) {
-		return carepo.findById(Id).get();
-				
+		return carepo.findById(Id).get();	
 	}
-
-
 
 	@Override
 	public Transaction findLatestTransaction() {
@@ -64,6 +52,3 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 	
 }
-
-
-

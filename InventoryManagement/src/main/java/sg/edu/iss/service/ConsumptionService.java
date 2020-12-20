@@ -1,6 +1,6 @@
 package sg.edu.iss.service;
 
-import java.time.LocalDate; 
+import java.time.LocalDate;  
 import java.util.List;
 
 import sg.edu.iss.model.Car;
@@ -18,4 +18,5 @@ public interface ConsumptionService {
 	public void manageStockStatus(Consumption dbConsumption, int currentStock, int consumedQty);
 	public Consumption findLatestConsumption();
 	public Boolean isExceedingStock(Consumption consumption);
+	
 }

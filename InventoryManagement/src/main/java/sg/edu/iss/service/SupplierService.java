@@ -6,6 +6,7 @@ import sg.edu.iss.model.Supplier;
 import sg.edu.iss.model.SupplierStatus;
 
 public interface SupplierService {
+	
 	 public boolean saveSupplier(Supplier supplier);
 	 public ArrayList<Supplier> findAllSuppliers();
 	 public void deleteSupplier(Supplier supplier);
@@ -17,4 +18,5 @@ public interface SupplierService {
 	 public Supplier findSupplierbyAddress (String address);
 	 public Supplier findSupplierbyEmailAddress(String emailaddress);
 	 public ArrayList<Supplier> findSuppliersByStatus(SupplierStatus status);
+	 
 }

@@ -1,12 +1,13 @@
 package sg.edu.iss.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
 import sg.edu.iss.model.Product;
 import sg.edu.iss.model.ProductStatus;
 
 public interface ProductService {
+	
 	 public boolean saveProduct(Product product);
 	 public ArrayList<Product> findAllProducts();
 	 public void deleteProduct(Product product);
@@ -16,4 +17,5 @@ public interface ProductService {
 	 public Product findProductbySupplierCompanyName(String name);
 	 public ArrayList<Product> findProductsByStatus(ProductStatus status);
 	 public List<Product> listAll(String keyword);
+	 
 }

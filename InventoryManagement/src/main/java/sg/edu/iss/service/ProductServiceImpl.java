@@ -1,5 +1,6 @@
 package sg.edu.iss.service;
-import java.util.ArrayList;
+
+import java.util.ArrayList; 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,57 +10,50 @@ import sg.edu.iss.model.Product;
 import sg.edu.iss.repo.ProductRepository;
 import sg.edu.iss.repo.SupplierRepository;
 
-
 @Service
 public class ProductServiceImpl implements ProductService {
+	
 	@Autowired
 	ProductRepository prorepo;
+	
 	@Autowired
-    SupplierRepository suprepo; //to find the supplier related to product
+    SupplierRepository suprepo;
+	
 	@Override
 	@Transactional
 	public boolean saveProduct(Product product) {
-		if(prorepo.save(product)!=null) 
-		{ 
-			return true; }
+		if(prorepo.save(product)!=null) { 
+			return true; 
+		}
 		return false;
 	}
 
 	@Override
 	public ArrayList<Product> findAllProducts() {
 		return (ArrayList<Product>)prorepo.findAll();
-		
 	}
 
 	@Override
 	@Transactional
 	public void deleteProduct(Product product) {
 		prorepo.delete(product);
-		
 	}
 
 	@Override
 	public Product findProductbyId(Integer id) {
 		return prorepo.findById(id).get();
-	
 	}
 
 	@Override
 	public boolean findSupplierfromProduct(Integer supplierId) {
-		
 		boolean toreturn=false;
-		
 		List<Product> products= prorepo.findAll();
-		for (Product p: products) 
-		{
-			if(p.getSupplierId()==supplierId)
-				{
-					toreturn=true;
-				}
-				
+		for (Product p: products) {
+			if(p.getSupplierId()==supplierId) {
+				toreturn=true;
+			}	
 		}
 	    return toreturn;
-		
 	}
 
 	@Override
@@ -79,14 +73,13 @@ public class ProductServiceImpl implements ProductService {
 		for(Product product : products) {
 			if(product.getStatus() == status) {
 				productsByStatus.add(product);
-				}
+			}
 		}
-
 		return productsByStatus;
 	}
 
 	@Override
-	public List<Product> listAll(String keyword){
+	public List<Product> listAll(String keyword) {
 		if (keyword != null) {
 			return (List<Product>)prorepo.search(keyword);
 		}

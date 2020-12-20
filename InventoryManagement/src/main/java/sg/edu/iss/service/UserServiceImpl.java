@@ -1,6 +1,6 @@
 package sg.edu.iss.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +12,17 @@ import sg.edu.iss.repo.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
 	UserRepository urepo;
-
 
 	@Override
 	public boolean saveUser(User user) {
 		if(urepo.save(user)!=null) 
 			return true; 
-		else return false;
-		
+		else {
+			return false;	
+		}
 	}
 
 	@Override
@@ -33,15 +34,12 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void deleteUser(User user) {
-		
-	urepo.delete(user);
-	
+		urepo.delete(user);
 	}
 
 	@Override
 	@Transactional
 	public User findUserbyId(Integer id) {
-
 		return urepo.findById(id).get();
 	}
 
@@ -52,7 +50,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findUserbyEmailAddress(String email) {
-		
 		return urepo.findByEmail(email);
 	}
 
@@ -60,9 +57,6 @@ public class UserServiceImpl implements UserService {
 	public User login(String username, String password) {
 		User user = urepo.findByUsernameAndPassword(username,password);
 		return user;
-	
 	}
 	
-	
-
 }
