@@ -24,18 +24,18 @@ public class Reorder {
 	@ManyToOne
 	@JoinColumn(name = "productId")
 	private Product product;
-	private OrderStatus status;
 	private int stockUnits;
 	@Positive(message="Order quantity must be more than zero") 
 	private int orderQty;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate date;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dateReceived;
 	@PositiveOrZero(message="Damaged quantity cannot be null nor negative")
 	private int damagedQty;
 	@Size(max=255, message="Cannot be more than 255 characters")
 	private String damagedDescription;
+	private OrderStatus status;
 	
 	public Reorder() {
 		super();
@@ -49,20 +49,20 @@ public class Reorder {
 		this.orderQty = orderQty;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Product getProduct() {
 		return product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public OrderStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(OrderStatus status) {
-		this.status = status;
 	}
 
 	public int getStockUnits() {
@@ -113,21 +113,20 @@ public class Reorder {
 		this.damagedDescription = damagedDescription;
 	}
 
-	public int getId() {
-		return id;
+	public OrderStatus getStatus() {
+		return status;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "Reorder [id=" + id + ", product=" + product + ", status=" + status + ", orderQty=" + orderQty
+		return "Reorder [id=" + id + ", product=" + product + ", stockUnits=" + stockUnits + ", orderQty=" + orderQty
 				+ ", date=" + date + ", dateReceived=" + dateReceived + ", damagedQty=" + damagedQty
-				+ ", damagedDescription=" + damagedDescription + "]";
+				+ ", damagedDescription=" + damagedDescription + ", status=" + status + "]";
 	}
-
 	
 }
 

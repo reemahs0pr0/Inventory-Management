@@ -28,6 +28,12 @@ public class Car {
 		this.ownerPhone = ownerPhone;
 		this.ownerEmail = ownerEmail;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getBrand() {
 		return brand;
 	}
@@ -58,60 +64,9 @@ public class Car {
 	public void setOwnerEmail(String ownerEmail) {
 		this.ownerEmail = ownerEmail;
 	}
-	public int getId() {
-		return id;
-	}
 	@Override
 	public String toString() {
 		return "Car: " + brand + " " + model + ", Owner: " + ownerName + ", Phone: "
 				+ ownerPhone + ", Email: " + ownerEmail;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + ((ownerEmail == null) ? 0 : ownerEmail.hashCode());
-		result = prime * result + ((ownerName == null) ? 0 : ownerName.hashCode());
-		result = prime * result + ownerPhone;
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Car other = (Car) obj;
-		if (brand == null) {
-			if (other.brand != null)
-				return false;
-		} else if (!brand.equals(other.brand))
-			return false;
-		if (id != other.id)
-			return false;
-		if (model == null) {
-			if (other.model != null)
-				return false;
-		} else if (!model.equals(other.model))
-			return false;
-		if (ownerEmail == null) {
-			if (other.ownerEmail != null)
-				return false;
-		} else if (!ownerEmail.equals(other.ownerEmail))
-			return false;
-		if (ownerName == null) {
-			if (other.ownerName != null)
-				return false;
-		} else if (!ownerName.equals(other.ownerName))
-			return false;
-		if (ownerPhone != other.ownerPhone)
-			return false;
-		return true;
-	}
-
 }

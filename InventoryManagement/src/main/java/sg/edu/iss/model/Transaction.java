@@ -17,12 +17,12 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int carId;
 	@ManyToOne
 	@JoinColumn(name = "car_carId")
 	private Car car;
 	@DateTimeFormat (pattern = "dd/MM/yyyy")
 	private LocalDate date;
-	private int carId;
 	public Transaction() {
 		super();
 	}
@@ -30,6 +30,18 @@ public class Transaction {
 		super();
 		this.car = car;
 		this.date = date;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getCarId() {
+		return carId;
+	}
+	public void setCarId(int carId) {
+		this.carId = carId;
 	}
 	public Car getCar() {
 		return car;
@@ -43,51 +55,9 @@ public class Transaction {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public int getId() {
-		return id;
-	}
-
-	public int getCarId() {
-		return carId;
-	}
-	public void setCarId(int carId) {
-		this.carId = carId;
-	}
-
 	@Override
 	public String toString() {
 		return "Transaction [id=" + id + ", car=" + car + ", date=" + date + "]";
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((car == null) ? 0 : car.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Transaction other = (Transaction) obj;
-		if (car == null) {
-			if (other.car != null)
-				return false;
-		} else if (!car.equals(other.car))
-			return false;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		return true;
-	}
-	
-	
 
 }

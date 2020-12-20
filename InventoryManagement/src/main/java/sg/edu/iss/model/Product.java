@@ -83,11 +83,11 @@ public class Product {
 	@Min(value=1, message="Reorder Qty has to be more than zero")
 	@Digits(fraction = 0, integer = 10, message ="Please enter whole number and not less than 0")
 	private int reorderQty;
-  
-	private int supplierId;
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
 	private Stock stock;
+	
+	private int supplierId;
 	
 	@ManyToOne
 	@JoinColumn(name = "supplier_supplierId")
@@ -103,32 +103,8 @@ public class Product {
 	
 	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
-
-    // with int supplierId for mapping in manage and no supplier
-	public Product(String name, String description, String type, String category, String subCategory,
-			float originalPrice, float wholesalePrice, float retailPrice, float partnerPrice, int mOQ,
-		     int supplierId) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		this.category = category;
-		this.subCategory = subCategory;
-		this.originalPrice = originalPrice;
-		this.wholesalePrice = wholesalePrice;
-		this.retailPrice = retailPrice;
-		this.partnerPrice = partnerPrice;
-		this.MOQ = mOQ;	
-		this.supplierId = supplierId;
-		this.reorderQty=0;
-		status = ProductStatus.IN_USE;
-		
-	}
-	
-	//to match with shameer's
 	public Product(String name, String description, String type, String category, String subCategory,
 			float originalPrice, float retailPrice, float wholesalePrice, float partnerPrice, int reorderQty, int mOQ,
 			Supplier supplier) {
@@ -149,27 +125,6 @@ public class Product {
 		reorders= new ArrayList<Reorder>();
 		status = ProductStatus.IN_USE;
 	}
-	
-	public ProductStatus getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(ProductStatus status) {
-		this.status = status;
-	}
-
-
-
-	public int getReorderQty() {
-		return reorderQty;
-	}
-
-
-	public void setReorderQty(int reorderQty) {
-		this.reorderQty = reorderQty;
-	}
-
 
 	public int getProductId() {
 		return productId;
@@ -215,8 +170,8 @@ public class Product {
 		return subCategory;
 	}
 
-	public void setSubCategory(String subCategoryString) {
-		this.subCategory = subCategoryString;
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
 	}
 
 	public float getOriginalPrice() {
@@ -259,6 +214,22 @@ public class Product {
 		MOQ = mOQ;
 	}
 
+	public int getReorderQty() {
+		return reorderQty;
+	}
+
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 	public int getSupplierId() {
 		return supplierId;
 	}
@@ -266,34 +237,26 @@ public class Product {
 	public void setSupplierId(int supplierId) {
 		this.supplierId = supplierId;
 	}
-	public List<Consumption> getConsumptions() {
-		return consumptions;
-	}
-	public void setConsumptions(List<Consumption> consumptions) {
-		this.consumptions = consumptions;
-	}
-	public void addConsumption(Consumption consumption) {
-		consumptions.add(consumption);
-	}
 
 	public Supplier getSupplier() {
 		return supplier;
 	}
 
 	public void setSupplier(Supplier supplier) {
-		if(supplier.getSupplierId()==this.supplierId)
 		this.supplier = supplier;
 	}
+
+	public List<Consumption> getConsumptions() {
+		return consumptions;
+	}
+
+	public void setConsumptions(List<Consumption> consumptions) {
+		this.consumptions = consumptions;
+	}
 	
-	public Stock getStock() {
-		return stock;
+	public void addConsumption(Consumption consumption) {
+		consumptions.add(consumption);
 	}
-
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
-
 
 	public List<Reorder> getReorders() {
 		return reorders;
@@ -302,122 +265,27 @@ public class Product {
 	public void setReorders(List<Reorder> reorders) {
 		this.reorders = reorders;
 	}
+	
 	public void addReorder(Reorder reorder) {
 		reorders.add(reorder);
 	}
 
+	public ProductStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ProductStatus status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", name=" + name + ", description=" + description + ", supplierId="
-				+ supplierId + "]";
+		return "Product [productId=" + productId + ", name=" + name + ", description=" + description + ", type=" + type
+				+ ", category=" + category + ", subCategory=" + subCategory + ", originalPrice=" + originalPrice
+				+ ", wholesalePrice=" + wholesalePrice + ", retailPrice=" + retailPrice + ", partnerPrice="
+				+ partnerPrice + ", MOQ=" + MOQ + ", reorderQty=" + reorderQty + ", stock=" + stock + ", supplier=" 
+				+ supplier + ", consumptions=" + consumptions + ", reorders=" + reorders
+				+ ", status=" + status + "]";
 	}
 
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + MOQ;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((consumptions == null) ? 0 : consumptions.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + Float.floatToIntBits(originalPrice);
-		result = prime * result + Float.floatToIntBits(partnerPrice);
-		result = prime * result + productId;
-		result = prime * result + reorderQty;
-		result = prime * result + ((reorders == null) ? 0 : reorders.hashCode());
-		result = prime * result + Float.floatToIntBits(retailPrice);
-		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((subCategory == null) ? 0 : subCategory.hashCode());
-		result = prime * result + ((supplier == null) ? 0 : supplier.hashCode());
-		result = prime * result + supplierId;
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + Float.floatToIntBits(wholesalePrice);
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		if (MOQ != other.MOQ)
-			return false;
-		if (category == null) {
-			if (other.category != null)
-				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (consumptions == null) {
-			if (other.consumptions != null)
-				return false;
-		} else if (!consumptions.equals(other.consumptions))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (Float.floatToIntBits(originalPrice) != Float.floatToIntBits(other.originalPrice))
-			return false;
-		if (Float.floatToIntBits(partnerPrice) != Float.floatToIntBits(other.partnerPrice))
-			return false;
-		if (productId != other.productId)
-			return false;
-		if (reorderQty != other.reorderQty)
-			return false;
-		if (reorders == null) {
-			if (other.reorders != null)
-				return false;
-		} else if (!reorders.equals(other.reorders))
-			return false;
-		if (Float.floatToIntBits(retailPrice) != Float.floatToIntBits(other.retailPrice))
-			return false;
-		if (stock == null) {
-			if (other.stock != null)
-				return false;
-		} else if (!stock.equals(other.stock))
-			return false;
-		if (subCategory == null) {
-			if (other.subCategory != null)
-				return false;
-		} else if (!subCategory.equals(other.subCategory))
-			return false;
-		if (supplier == null) {
-			if (other.supplier != null)
-				return false;
-		} else if (!supplier.equals(other.supplier))
-			return false;
-		if (supplierId != other.supplierId)
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
-		if (Float.floatToIntBits(wholesalePrice) != Float.floatToIntBits(other.wholesalePrice))
-			return false;
-		return true;
-	}
-
-
-
-	
-	
-
-
-	
-	
-	
 }

@@ -18,12 +18,12 @@ public class Consumption {
 	@ManyToOne
 	@JoinColumn(name = "transactionId")
 	private Transaction transaction;
+	private int productId;
 	@ManyToOne
 	@JoinColumn(name = "product_productId")
 	private Product product;
 	@Positive(message="Must be more than zero")
 	private int consumedQty;
-	private int productId;
 	public Consumption() {
 		super();
 	}
@@ -33,11 +33,23 @@ public class Consumption {
 		this.product = product;
 		this.consumedQty = consumedQty;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Transaction getTransaction() {
 		return transaction;
 	}
 	public void setTransaction(Transaction usage) {
 		this.transaction = usage;
+	}
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 	public Product getProduct() {
 		return product;
@@ -51,48 +63,9 @@ public class Consumption {
 	public void setConsumedQty(int consumedQty) {
 		this.consumedQty = consumedQty;
 	}
-	public int getId() {
-		return id;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + consumedQty;
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		result = prime * result + ((transaction == null) ? 0 : transaction.hashCode());
-		return result;
+	public String toString() {
+		return "Consumption [id=" + id + ", transaction=" + transaction + ", product=" + product + ", consumedQty="
+				+ consumedQty + "]";
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Consumption other = (Consumption) obj;
-		if (consumedQty != other.consumedQty)
-			return false;
-		if (product == null) {
-			if (other.product != null)
-				return false;
-		} else if (!product.equals(other.product))
-			return false;
-		if (transaction == null) {
-			if (other.transaction != null)
-				return false;
-		} else if (!transaction.equals(other.transaction))
-			return false;
-		return true;
-	}
-	
 }
