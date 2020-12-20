@@ -115,40 +115,42 @@ public class ProductController {
 
 		Product prevProduct=proservice.findProductbyId(product.getProductId());
 		Product newProduct=(Product) model.getAttribute("product");
-		if (bindingResult.hasErrors()) 
-		{	
+		if (bindingResult.hasErrors()) {	
 			model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 			return "productform1";
 		}
-		else if(!prevProduct.getName().equalsIgnoreCase(newProduct.getName()))
-		{   if(proservice.findProductbyName(product.getName()) !=null 
-		&& proservice.findProductbyName(product.getName()).getStatus() == ProductStatus.IN_USE)
-			
-			{   model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
+		else if(!prevProduct.getName().equalsIgnoreCase(newProduct.getName())) {   
+			if(proservice.findProductbyName(product.getName()) !=null && 
+					proservice.findProductbyName(product.getName()).getStatus() == ProductStatus.IN_USE) {   
+				model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 				model.addAttribute("duplicate", "The product name already exists");
-				return "productform1";}
+				return "productform1";
+			}
 			else {
-			// to add supplier inside the product by the Id parsed from form 
+				 // to add supplier inside the product by the Id parsed from form 
+				 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
+				 //set product status again
+				 product.setStatus(ProductStatus.IN_USE);
+				 //adding product into corresponding supplier
+				 Supplier correspondingSupplier = supservice.findSupplierbyId(product.getSupplierId());
+				 correspondingSupplier.addProduct(product);
+				 //to save
+				 proservice.saveProduct(product);
+				 return "forward:/product/list";
+			} 
+		}
+		else {
+			 // to add supplier inside the product by the Id parsed from form 
 			 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
+			 //set product status again
+			 product.setStatus(ProductStatus.IN_USE);
 			 //adding product into corresponding supplier
 			 Supplier correspondingSupplier =supservice.findSupplierbyId(product.getSupplierId());
 			 correspondingSupplier.addProduct(product);
+			 
 			 //to save
 			 proservice.saveProduct(product);
 			 return "forward:/product/list";
-			} 
-		}
-		
-		else {
-		// to add supplier inside the product by the Id parsed from form 
-		 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
-		 //adding product into corresponding supplier
-		 Supplier correspondingSupplier =supservice.findSupplierbyId(product.getSupplierId());
-		 correspondingSupplier.addProduct(product);
-		 
-		 //to save
-		 proservice.saveProduct(product);
-		 return "forward:/product/list";
 		}
 	}
 
