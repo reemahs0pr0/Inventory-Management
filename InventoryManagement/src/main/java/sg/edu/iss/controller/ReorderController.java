@@ -14,11 +14,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-<<<<<<< Updated upstream
-=======
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
->>>>>>> Stashed changes
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,14 +27,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import sg.edu.iss.model.Consumption;
 import sg.edu.iss.model.Product;
 import sg.edu.iss.model.Reorder;
-<<<<<<< Updated upstream
 import sg.edu.iss.model.SupplierStatus;
-=======
 import sg.edu.iss.model.Supplier;
-import sg.edu.iss.model.SupplierStatus;
 import sg.edu.iss.service.ProductService;
 import sg.edu.iss.service.ProductServiceImpl;
->>>>>>> Stashed changes
 import sg.edu.iss.service.ReorderImplementation;
 import sg.edu.iss.service.ReorderInterface;
 import sg.edu.iss.service.SupplierService;
@@ -65,12 +58,11 @@ public class ReorderController {
 	
 	// User requests to view the list of orders made
 	@RequestMapping(value = "/list")
-	public String list(Model model, @Param("keyword") String keyword) {
-		List<Reorder> rlist = rservice.list(keyword);
+	public String list(Model model) {
+		List<Reorder> rlist = rservice.list();
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("today", LocalDate.now().toString());
 		model.addAttribute("suppliers", supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
-		model.addAttribute("keyword", keyword);
 		return "reorderslist";
 	}
 	
@@ -222,36 +214,36 @@ public class ReorderController {
             String nl = "\r\n"; //carriage return
             //Heading
             String title = "Inventory Reorder Report for products from Supplier " + supplier.getCompanyName();
-            myWriter.write(centerString(100, title + nl));
+            myWriter.write(centerString(92, title + "\n"));
             myWriter.write(spacer.repeat(title.length()) + nl);
             //Table headings
-            myWriter.write(spacer2.repeat(161) + nl);
-            myWriter.write(String.format("%1$-5s", "Product Id"));
-            myWriter.write(String.format("%1$-11s", "Unit Price"));
-            myWriter.write(String.format("%1$-15s", "Qty"));
-            myWriter.write(String.format("%1$-15s", "Reorder Qty"));
-            myWriter.write(String.format("%1$-20s", "Min Order Qty"));
-            myWriter.write(String.format("%1$-20s", "Order Qty"));
-            myWriter.write(String.format("%1$-13s", "Price" + nl));
-            myWriter.write(spacer2.repeat(161) + nl);
+            myWriter.write(spacer2.repeat(92) + nl);
+            myWriter.write("Product Id" + " ".repeat(5));
+            myWriter.write("Unit Price" + " ".repeat(5));
+            myWriter.write("Qty" + " ".repeat(5));
+            myWriter.write("Reorder Qty" + " ".repeat(5));
+            myWriter.write("Min Order Qty" + " ".repeat(5));
+            myWriter.write("Order Qty" + " ".repeat(5));
+            myWriter.write("Price" + nl);
+            myWriter.write(spacer2.repeat(92) + nl);
             //data
             float total = 0;
     		for (Reorder r : reorders) {
-                myWriter.write(String.format("%1$-5s", r.getProduct().getProductId()));
-                myWriter.write(String.format("%1$-11s", r.getProduct().getOriginalPrice()));
-                myWriter.write(String.format("%1$-15s", r.getStockUnits()));
-                myWriter.write(String.format("%1$-15s", r.getProduct().getReorderQty()));
-                myWriter.write(String.format("%1$-20s", r.getProduct().getMOQ()));
-                myWriter.write(String.format("%1$-20s", r.getOrderQty()));
-                myWriter.write(String.format("%1$-13s", (r.getProduct().getOriginalPrice() * r.getOrderQty())) + nl);
-                total += r.getProduct().getOriginalPrice() * r.getOrderQty();
+                myWriter.write("0".repeat(4-String.valueOf(r.getProduct().getProductId()).length()) + r.getProduct().getProductId() + " ".repeat(11));
+                myWriter.write(r.getProduct().getOriginalPrice() + "0" + " ".repeat(10));
+                myWriter.write(r.getStockUnits() + " ".repeat(8));
+                myWriter.write(r.getProduct().getReorderQty() + " ".repeat(15));
+                myWriter.write(r.getProduct().getMOQ() + " ".repeat(17));
+                myWriter.write(r.getOrderQty() + " ".repeat(9));
+                myWriter.write( (r.getProduct().getOriginalPrice() * r.getOrderQty()) + nl);
+                total += r.getProduct().getOriginalPrice() * r.getOrderQty();                
     		}
     		//total
-    		myWriter.write(spacer2.repeat(161) + nl);
-    		myWriter.write(" ".repeat(120) + "TOTAL" + " ".repeat(30) + total + nl);
-    		myWriter.write(spacer2.repeat(161) + nl);
+    		myWriter.write(spacer2.repeat(92) + nl);
+    		myWriter.write(" ".repeat(70) + "TOTAL" + " ".repeat(10) + total + "0" + nl);
+    		myWriter.write(spacer2.repeat(92) + nl);
     		//end
-    		myWriter.write(centerString(100, "End of Report"));
+    		myWriter.write(centerString(92, "End of Report"));
     		
             myWriter.flush();
             myWriter.close();
@@ -297,7 +289,7 @@ public class ReorderController {
 				ServletOutputStream out = response.getOutputStream();
 
 				byte[] outputByte = new byte[4096];
-				//copy binary contect to output stream
+				//copy binary content to output stream
 				while(fileIn.read(outputByte, 0, 4096) != -1) {
 				    out.write(outputByte, 0, 4096);
 				}
@@ -334,7 +326,7 @@ public class ReorderController {
 				ServletOutputStream out = response.getOutputStream();
 
 				byte[] outputByte = new byte[4096];
-				//copy binary contect to output stream
+				//copy binary content to output stream
 				while(fileIn.read(outputByte, 0, 4096) != -1) {
 				    out.write(outputByte, 0, 4096);
 				}

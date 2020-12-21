@@ -10,7 +10,7 @@ import sg.edu.iss.model.Reorder;
 
 public interface ReorderInterface {
 	
-	public List<Reorder> list(String keyword);
+	public List<Reorder> list();
 	public Reorder getReorderById(int id);
 	public void updateOrderQty(Reorder reorder); 
 	public void updateOrderStatus(Reorder reorder); 

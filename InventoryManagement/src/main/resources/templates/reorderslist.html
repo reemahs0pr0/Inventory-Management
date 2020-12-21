@@ -17,21 +17,6 @@
 		</tr>
 	</table>
 	
-<<<<<<< Updated upstream
-	<!-- search bar -->
-	<form th:action="@{/reorders/list}">
-	    Supplier: 
-	    <select name="keyword">
-    		<option th:each="s : ${suppliers}" th:value="${s.companyName}" th:text="${s.companyName}" ></option>
-    	</select>
-	    &nbsp;
-	    <input class="btn btn-success" type="submit" value="Search" />
-	    &nbsp;
-	    <input class="btn btn-danger" type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
-	</form>
-	
-	<!-- Clear fields -->
-=======
 	<form th:action="@{/reorders/list/filter}">
 	    Start: <input type="date" id="start" name="start" th:value="${start}" th:max="${today}">
 	    &nbsp;
@@ -42,14 +27,12 @@
 	    
 	    <input type="submit" class="btn btn-warning" value="Generate Report" id="generate" th:formaction="@{/reorders/list/filter/report}" onclick="return myFunction()"  />
 	</form>   
->>>>>>> Stashed changes
+
 	<script type="text/javascript">
 	    function clearSearch() {
 	        window.location = "[[@{/reorders/list}]]";
 	    }
-<<<<<<< Updated upstream
-=======
-	    
+
 	    function myFunction() {
 	    	  var x = document.getElementById("start").value;
 	    	  var y= document.getElementById("end").value;
@@ -59,7 +42,6 @@
 	    	  }
 	    	 return true;
 	    }
->>>>>>> Stashed changes
 	</script>
 	
 	<!-- Generate list of orders needed to be reordered -->

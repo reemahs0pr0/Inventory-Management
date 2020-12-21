@@ -1,11 +1,7 @@
 package sg.edu.iss.service;
 
-<<<<<<< Updated upstream
-import java.time.LocalDate;     
-=======
 import java.time.LocalDate;
 import java.util.ArrayList;
->>>>>>> Stashed changes
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import sg.edu.iss.model.OrderStatus;
 import sg.edu.iss.model.Product;
 import sg.edu.iss.model.Reorder;
 import sg.edu.iss.model.StockStatus;
-import sg.edu.iss.model.Transaction;
 import sg.edu.iss.repo.ProductRepository;
 import sg.edu.iss.repo.ReorderRepository;
 import sg.edu.iss.repo.StockRepository;
@@ -36,10 +31,7 @@ public class ReorderImplementation implements ReorderInterface {
 	ProductRepository prepo;
 	
 	@Override
-	public List<Reorder> list(String keyword) {
-		if (keyword != null) {
-			return rrepo.search(keyword);
-		}
+	public List<Reorder> list() {
 		return rrepo.findAll();
 	}
 

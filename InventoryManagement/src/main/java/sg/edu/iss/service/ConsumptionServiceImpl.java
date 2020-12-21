@@ -127,7 +127,7 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 		        emailSender.send(message);
 		        //add new reorder record
 		        rrepo.save(new Reorder(dbConsumption.getProduct(), OrderStatus.PENDING_ORDER, newStock, 
-		        		dbConsumption.getProduct().getMOQ()));
+		        		dbConsumption.getProduct().getMOQ()+dbConsumption.getProduct().getReorderQty()-newStock));
 			}
 			
 		}

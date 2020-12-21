@@ -87,7 +87,7 @@ public class ClubApplication {
 					"7 Toa Payoh Industrial Park, Singapore 319059", "Ali", "98765432", 
 					"alimani@gmail.com",  "Toyota");
 			Product p1 = new Product("Royal Maxpider Car Mat", "comfortable car mat", 
-					"accessories", "mat", "driver mat", 100, 150, 130, 120, 10, 50, s1);
+					"accessories", "mat", "driver mat", 10, 15, 13, 12, 10, 50, s1);
 			s1.addProduct(p1);
 			srepo.save(s1);
 			prepo.save(p1);
@@ -96,7 +96,7 @@ public class ClubApplication {
 					"69 Tampines Industrial Park, Singapore 325674", "Bobby","95474334", 
 					"bobbyfir@gmail.com",  "Honda");
 			Product p2 = new Product("Turanza T005 Tyre", "a very good tyre", 
-					"expendable", "tyre", "tyre", 150, 200, 180, 170, 10, 50, s2);
+					"expendable", "tyre", "tyre", 15, 20, 18, 17, 10, 50, s2);
 			s2.addProduct(p2);
 			srepo.save(s2);
 			prepo.save(p2);
@@ -105,7 +105,7 @@ public class ClubApplication {
 					"4 Simei Industrial Park, Singapore 346038", "Charlie", "91245526", 
 					"chaplin@gmail.com",  "Mazda");
 			Product p3 = new Product("Ultra shade", "provide sun shade", 
-					"accessories", "visor", "door visor", 150, 200, 180, 170, 10, 50, s3);
+					"accessories", "visor", "door visor", 15, 20, 18, 17, 10, 50, s3);
 			s3.addProduct(p3);
 			srepo.save(s3);
 			prepo.save(p3);
@@ -114,7 +114,7 @@ public class ClubApplication {
 					"89 Toa Payoh Industrial Park, Singapore 234086", "Park", "85676245", 
 					"jisung@gmail.com",  "Hyundai");
 			Product p4 = new Product("The Powerful Light", "lighting for the car", 
-					"electrical", "light", "headlight", 210, 260, 240, 230, 10, 50, s4);
+					"electrical", "light", "headlight", 21, 26, 24, 23, 10, 50, s4);
 			s4.addProduct(p4);
 			srepo.save(s4);
 			prepo.save(p4);
@@ -123,7 +123,7 @@ public class ClubApplication {
 					"12 Kallang Industrial Park, Singapore 644009", "Biscuit", "86535621", 
 					"cracker@gmail.com",  "Lexus");
 			Product p5 = new Product("Steel Rim", "tyre rim", 
-					"expendable", "rim", "rim", 200, 250, 230, 220, 10, 50, s5);
+					"expendable", "rim", "rim", 20, 25, 23, 22, 10, 50, s5);
 			s5.addProduct(p5);
 			srepo.save(s5);
 			prepo.save(p5);
@@ -132,7 +132,7 @@ public class ClubApplication {
 					"4 Geylang Industrial Park, Singapore 213084", "Pai", "93565743", 
 					"paikia@gmail.com",  "Kia");
 			Product p6 = new Product("Auto gear box", "gear box for auto car", 
-					"mechanical", "gearbox", "auto gearbox", 500, 550, 530, 520, 10, 
+					"mechanical", "gearbox", "auto gearbox", 50, 55, 53, 52, 10, 
 					50, s6);
 			s6.addProduct(p6);
 			srepo.save(s6);
@@ -142,7 +142,7 @@ public class ClubApplication {
 					"Bukit Timah Industrial Park, Singapore 570934", "Richman", "95425642", 
 					"iamrich@gmail.com",  "BMW");
 			Product p7 = new Product("Model RTX clutch", "2020 clutch model", 
-					"mechanical", "clutch", "clutch", 340, 390, 370, 360, 10, 50, s7);
+					"mechanical", "clutch", "clutch", 34, 39, 37, 36, 10, 50, s7);
 			s7.addProduct(p7);
 			srepo.save(s7);
 			prepo.save(p7);
@@ -151,7 +151,7 @@ public class ClubApplication {
 					"45 Queenstown Industrial Park, Singapore 363095", "Hamilton", 
 					"92365325", "lewis@gmail.com", "Mercedes");
 			Product p8 = new Product("Gold Dashboard", "dashboard for the rich", 
-					"accessories", "board", "dashboard", 140, 190, 170, 160, 10, 50, s8);
+					"accessories", "board", "dashboard", 14, 19, 17, 16, 10, 50, s8);
 			s8.addProduct(p8);
 			srepo.save(s8);
 			prepo.save(p8);
@@ -160,7 +160,7 @@ public class ClubApplication {
 					"76 Jurong Industrial Park, Singapore 630345", "Ken", "98758345", 
 					"watanabe@gmail.com",  "Audi");
 			Product p9 = new Product("The door", "strong door", 
-					"accessories", "door", "driver door", 240, 290, 270, 260, 10, 50, s9);
+					"accessories", "door", "driver door", 24, 29, 27, 26, 10, 50, s9);
 			s9.addProduct(p9);
 			srepo.save(s9);
 			prepo.save(p9);
@@ -169,8 +169,8 @@ public class ClubApplication {
 					"67 Woodlands Industrial Park, Singapore 585340", "Sunny", "86378794", 
 					"sunny@gmail.com",  "Nissan");
 			Product p10 = new Product("Steering Wheel", "wheel for steering", 
-					"accessories", "steering wheel", "powered steering wheel", 230, 280, 
-					260, 250, 10, 50, s10);
+					"accessories", "steering wheel", "powered steering wheel", 23, 28, 
+					26, 25, 10, 50, s10);
 			s10.addProduct(p10);
 			srepo.save(s10);
 			prepo.save(p10);
@@ -227,7 +227,7 @@ public class ClubApplication {
 			
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			
-			Reorder r1 = new Reorder(p1, OrderStatus.ADDED_TO_INVENTORY, 3, 50);
+			Reorder r1 = new Reorder(p1, OrderStatus.ADDED_TO_INVENTORY, 3, 57);
 			r1.setDate(LocalDate.parse("06/05/2020", df));
 			r1.setDamagedQty(2);
 			r1.setDateReceived(LocalDate.parse("09/05/2020", df));
@@ -235,7 +235,7 @@ public class ClubApplication {
 			p1.addReorder(r1);
 			prepo.save(p1);
 			
-			Reorder r2 = new Reorder(p4, OrderStatus.ADDED_TO_INVENTORY, 0, 50);
+			Reorder r2 = new Reorder(p4, OrderStatus.ADDED_TO_INVENTORY, 0, 60);
 			r2.setDate(LocalDate.parse("06/05/2020", df));
 			r2.setDamagedQty(4);
 			r2.setDateReceived(LocalDate.parse("09/05/2020", df));
@@ -243,7 +243,7 @@ public class ClubApplication {
 			p4.addReorder(r2);
 			prepo.save(p4);
 			
-			Reorder r3 = new Reorder(p8, OrderStatus.ADDED_TO_INVENTORY, 5, 50);
+			Reorder r3 = new Reorder(p8, OrderStatus.ADDED_TO_INVENTORY, 5, 55);
 			r3.setDate(LocalDate.parse("06/05/2020", df));
 			r3.setDamagedQty(1);
 			r3.setDateReceived(LocalDate.parse("09/05/2020", df));
@@ -251,7 +251,7 @@ public class ClubApplication {
 			p8.addReorder(r3);
 			prepo.save(p8);
 			
-			Reorder r4 = new Reorder(p9, OrderStatus.ADDED_TO_INVENTORY, 2, 50);
+			Reorder r4 = new Reorder(p9, OrderStatus.ADDED_TO_INVENTORY, 2, 58);
 			r4.setDate(LocalDate.parse("06/05/2020", df));
 			r4.setDamagedQty(3);
 			r4.setDateReceived(LocalDate.parse("09/05/2020", df));
@@ -259,7 +259,7 @@ public class ClubApplication {
 			p9.addReorder(r4);
 			prepo.save(p9);
 			
-			Reorder r5 = new Reorder(p10, OrderStatus.ADDED_TO_INVENTORY, 5, 50);
+			Reorder r5 = new Reorder(p10, OrderStatus.ADDED_TO_INVENTORY, 5, 55);
 			r5.setDate(LocalDate.parse("06/05/2020", df));
 			r5.setDamagedQty(5);
 			r5.setDateReceived(LocalDate.parse("09/05/2020", df));
@@ -280,9 +280,9 @@ public class ClubApplication {
 			p3.addReorder(r7);
 			prepo.save(p3);
 			
-			rrepo.save(new Reorder(p5, OrderStatus.PENDING_ORDER, 5, 50));
-			rrepo.save(new Reorder(p6, OrderStatus.PENDING_ORDER, 9, 50));
-			rrepo.save(new Reorder(p7, OrderStatus.PENDING_ORDER, 3, 50));
+			rrepo.save(new Reorder(p5, OrderStatus.PENDING_ORDER, 5, 55));
+			rrepo.save(new Reorder(p6, OrderStatus.PENDING_ORDER, 9, 51));
+			rrepo.save(new Reorder(p7, OrderStatus.PENDING_ORDER, 3, 57));
 			
 			//choose car
 			Car c1 = new Car("Audi", "RX8", "Alan", 95421244, "alan@gmail.com");

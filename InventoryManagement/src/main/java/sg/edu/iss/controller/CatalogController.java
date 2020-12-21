@@ -89,12 +89,8 @@ public class CatalogController {
 	    return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
 	}
 	
-	//Put your local file path to where you want it to be saved, dynamic name generation will be added later 
-	public static String filepath = "C:\\forCa\\forCa.txt";
-	
-	
 	//generates report based on consumptions list passed in
-	public static void genReport(List<Consumption> consumptions, LocalDate start, LocalDate end) {
+	public static void genReport(List<Consumption> consumptions, LocalDate start, LocalDate end, String filepath) {
 		// for testing
 		System.out.println("Triggered");
 		
@@ -160,19 +156,22 @@ public class CatalogController {
 		//if no date is input it will generate report for the whole list
 		if(start == null && end == null) {
 			List<Consumption> consumptions = conservice.listConsumptionsbyProductId(id);
-			genReport(consumptions, start, end);
+			Product product = proservice.findProductbyId(id);
+			String filepath = "C:\\forCa\\" + product.getName() + "_usagereport.dat";
+			genReport(consumptions, start, end, filepath);
 			model.addAttribute("consumptions", consumptions);
 			
 			// Triggers download
+			String filename = product.getName() + "_usagereport.dat";
 			response.setContentType("application/octet-stream");
 			response.setHeader("Content-Disposition",
-			"attachment;filename=filename2.txt");
+			"attachment;filename=" + filename);
 			File file = new File(filepath);
 			FileInputStream fileIn = new FileInputStream(file);
 			ServletOutputStream out = response.getOutputStream();
 
 			byte[] outputByte = new byte[4096];
-			//copy binary contect to output stream
+			//copy binary content to output stream
 			while(fileIn.read(outputByte, 0, 4096) != -1) {
 			    out.write(outputByte, 0, 4096);
 			}
@@ -183,18 +182,21 @@ public class CatalogController {
 		}
 		else {
 			List<Consumption> consumptions = conservice.findConsumptionByTransactionIdwithDate(id, start, end);
-			genReport(consumptions, start, end);
+			Product product = proservice.findProductbyId(id);
+			String filepath = "C:\\forCa\\" + product.getName() + "_usagereport.dat";
+			genReport(consumptions, start, end, filepath);
 			model.addAttribute("consumptions", consumptions);
 			// Triggers download
+			String filename = product.getName() + "_usagereport.dat";
 			response.setContentType("application/octet-stream");
 			response.setHeader("Content-Disposition",
-			"attachment;filename=filename2.txt");
+			"attachment;filename=" + filename);
 			File file = new File(filepath);
 			FileInputStream fileIn = new FileInputStream(file);
 			ServletOutputStream out = response.getOutputStream();
 
 			byte[] outputByte = new byte[4096];
-			//copy binary contect to output stream
+			//copy binary content to output stream
 			while(fileIn.read(outputByte, 0, 4096) != -1) {
 			    out.write(outputByte, 0, 4096);
 			}
