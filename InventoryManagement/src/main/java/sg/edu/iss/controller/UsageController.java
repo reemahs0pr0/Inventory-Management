@@ -183,7 +183,7 @@ public class UsageController {
 				proservice.saveProduct(p);
 				conservice.updateStock(c);
 			}
-			if(session.getAttribute("session") == RoleType.ADMIN) {
+			if(session.getAttribute("session") == "admin") {
 				return "adminmain";
 			}
 			return "mechanicmain";
