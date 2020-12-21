@@ -1,6 +1,6 @@
 package sg.edu.iss.controller;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,13 +24,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import sg.edu.iss.model.Consumption;
 import sg.edu.iss.model.Product;
 import sg.edu.iss.model.Reorder;
 import sg.edu.iss.model.SupplierStatus;
 import sg.edu.iss.model.Supplier;
-import sg.edu.iss.service.ProductService;
-import sg.edu.iss.service.ProductServiceImpl;
 import sg.edu.iss.service.ReorderImplementation;
 import sg.edu.iss.service.ReorderInterface;
 import sg.edu.iss.service.SupplierService;
@@ -340,6 +337,3 @@ public class ReorderController {
 	}
 		
 }
-	
-
-
