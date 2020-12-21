@@ -1,9 +1,8 @@
 package sg.edu.iss.controller;
 
-import java.util.List; 
+import java.util.List;  
 import sg.edu.iss.model.ProductStatus;
 import javax.validation.Valid;
-import sg.edu.iss.repo.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -31,9 +30,6 @@ public class ProductController {
 	
 	@Autowired
 	private SupplierService supservice;
-	
-	@Autowired
-	private StockRepository srepo;
     
 	@Autowired
 	public void setProductService(ProductServiceImpl productServiceImpl) {
@@ -159,7 +155,7 @@ public class ProductController {
 					product.setStatus(ProductStatus.ARCHIVED);
 				}
 			}
-			srepo.deleteById(proservice.findProductbyId(id).getStock().getId());
+			proservice.deleteStock(proservice.findProductbyId(id).getStock());
 			return "producterror_archived";
 		}
 	

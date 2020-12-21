@@ -61,12 +61,6 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 	}
 
 	@Override
-	public List<Consumption> findConsumptionByTranAndProId(Integer tid, Integer pid) {
-		// TODO Auto-generated method stub
-		return conrepo.findConsumptionByTranAndProId(tid, pid);
-	}
-
-	@Override
 	public List<Consumption> findConsumptionByTransactionIdwithDate(Integer id, 
 			@DateTimeFormat(iso=ISO.DATE)LocalDate start, @DateTimeFormat(iso=ISO.DATE)LocalDate end) {
 		List<Transaction> transactionsfound = tranrepo.findTransactionByDateRange(start, end);

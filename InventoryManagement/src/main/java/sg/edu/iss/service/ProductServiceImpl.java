@@ -1,14 +1,15 @@
 package sg.edu.iss.service;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sg.edu.iss.model.ProductStatus;
+import sg.edu.iss.model.Stock;
 import sg.edu.iss.model.Product;
 import sg.edu.iss.repo.ProductRepository;
-import sg.edu.iss.repo.SupplierRepository;
+import sg.edu.iss.repo.StockRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -17,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepository prorepo;
 	
 	@Autowired
-    SupplierRepository suprepo;
+	StockRepository strepo;
 	
 	@Override
 	@Transactional
@@ -26,11 +27,6 @@ public class ProductServiceImpl implements ProductService {
 			return true; 
 		}
 		return false;
-	}
-
-	@Override
-	public ArrayList<Product> findAllProducts() {
-		return (ArrayList<Product>)prorepo.findAll();
 	}
 
 	@Override
@@ -45,31 +41,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public boolean findSupplierfromProduct(Integer supplierId) {
-		boolean toreturn=false;
-		List<Product> products= prorepo.findAll();
-		for (Product p: products) {
-			if(p.getSupplierId()==supplierId) {
-				toreturn=true;
-			}	
-		}
-	    return toreturn;
-	}
-
-	@Override
 	public Product findProductbyName(String name) {
 		return prorepo.findbyName(name);
 	}
 
 	@Override
-	public Product findProductbySupplierCompanyName(String name) {
-		return prorepo.findbySupplierCompanyName(name);
-	}
-
-	@Override
-	public ArrayList<Product> findProductsByStatus(ProductStatus status) {
-		ArrayList<Product> products = findAllProducts();
-		ArrayList<Product> productsByStatus = new ArrayList<Product>();
+	public List<Product> findProductsByStatus(ProductStatus status) {
+		List<Product> products = prorepo.findAll();
+		List<Product> productsByStatus = new ArrayList<Product>();
 		for(Product product : products) {
 			if(product.getStatus() == status) {
 				productsByStatus.add(product);
@@ -84,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
 			return (List<Product>)prorepo.search(keyword);
 		}
 		return (List<Product>)findProductsByStatus(ProductStatus.IN_USE);
+	}
+	
+	@Override
+	public void deleteStock(Stock stock) {
+		strepo.delete(stock);
 	}
 
 }

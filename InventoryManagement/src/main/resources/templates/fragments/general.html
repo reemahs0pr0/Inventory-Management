@@ -9,17 +9,31 @@
 	<div th:fragment="header" id="header">
 		<table width="100%" class="center">
 			<tr align="center">
-				<td style="background-color:#003366" width="30%"></td>
-				<td style="background-color:#003366" align="center" width="40%">
+				<td style="background-color: #003366" width="30%"></td>
+				<td style="background-color: #003366" align="center" width="40%">
 					<img th:src="@{/image/inventory.png}" width="100" height="100" />
-					<h3 style="color:#ffffff">Team 6 Inventory Management System</h3></td>
-				<td style="background-color:#003366" width="30%"></td>
+					<h3 style="color: #ffffff">Team 6 Inventory Management System</h3>
+				</td>
+				<td style="background-color: #003366" width="30%"></td>
 			</tr>
 		</table>
 	</div>
-	<div th:fragment="menu" id="menu">		
-	</div>
+	<div th:fragment="menu" id="menu"></div>
+	
 	<footer th:fragment="footer">
+		<br>
+	<br>
+	<br>
+	<br>
+	<br>
+		<table width="100%" class="center">
+			<tr align="center">
+				<td style="color: #ffffff; background-color: #003366">	
+					<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-info btn-sm" th:href="@{/user/home/admin}">Back to Home</a></span>
+					<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-info btn-sm" th:href="@{/user/home/mechanic}">Back to Home</a></span> <br />
+				<small style="color: #ffffff"> (C) Inventory Management System, ISS, NUS 2020</small></td>
+			</tr>
+		</table>
 	</footer>
 </body>
 </html>

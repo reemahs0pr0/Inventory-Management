@@ -6,7 +6,6 @@ import sg.edu.iss.model.Reorder;
 
 public interface ReorderInterface {
 	
-	public void save(Reorder reorder);
 	public List<Reorder> list();
 	public Reorder getReorderById(int id);
 	public void updateOrderQty(Reorder reorder); 

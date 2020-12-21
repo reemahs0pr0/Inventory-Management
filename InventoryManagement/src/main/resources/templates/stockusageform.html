@@ -60,8 +60,6 @@
 	<br >
 	<p><span th:unless="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/add}">Back</a></span>
 	<span th:if="${not #lists.isEmpty(session.consumptions)}"><a href="Home" class="btn btn-danger" th:href="@{/usage/removepart}">Back</a></span></p>
-	<span th:if="${session.session == 'admin'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/admin}">Home</a></span>
-	<span th:if="${session.session == 'mechanic'}"><a href="Home" class="btn btn-primary" th:href="@{/user/home/mechanic}">Home</a></span>
 	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>

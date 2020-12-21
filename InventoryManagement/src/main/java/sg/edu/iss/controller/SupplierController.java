@@ -29,12 +29,12 @@ public class SupplierController {
 	
 	@Autowired
 	public void setSupplierService(SupplierServiceImpl supserviceimpl) {
-		this.supservice =supserviceimpl;
+		this.supservice = supserviceimpl;
 	}
 	
 	@RequestMapping(value="/list")
 	public String listSuppliers(Model model) {
-		model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
+		model.addAttribute("suppliers", supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 		return "suppliers";
 	}
 

@@ -16,9 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p WHERE p.name=:name")
 	public Product findbyName(@Param("name")String name);
 	
-	@Query("SELECT p FROM Product p WHERE p.supplier.companyName=:name")
-	public Product findbySupplierCompanyName(@Param("name")String name);
-	
 	@Query("SELECT p FROM Product p WHERE CONCAT(p.name, ' ', p.description, ' ', "
 			+ "p.type, ' ', p.category, ' ', p.subCategory, ' ', p.supplier.companyName) LIKE %?1% AND p.status = 0")
 	public List<Product> search(String keyword);

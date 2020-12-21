@@ -75,9 +75,6 @@ public class ReorderController {
 			rservice.updateOrderStatus(reorder);
 			// update 
 			rservice.addDate(reorder);
-			//add reorder to product
-			reorder.getProduct().addReorder(reorder);
-			proservice.saveProduct(reorder.getProduct());
 			// return reorders list
 			return "forward:/reorders/list";
 		}

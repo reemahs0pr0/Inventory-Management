@@ -1,6 +1,8 @@
 package sg.edu.iss.service;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +26,6 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
-	public ArrayList<Supplier> findAllSuppliers() {
-		return (ArrayList<Supplier>)suprepo.findAll();
-	}
-
-	@Override
 	@Transactional
 	public void deleteSupplier(Supplier supplier) {
 		suprepo.delete(supplier);
@@ -38,16 +35,6 @@ public class SupplierServiceImpl implements SupplierService {
 	@Transactional
 	public Supplier findSupplierbyId(Integer id) {
 		return suprepo.findById(id).get();
-	}
-
-	@Override
-	public ArrayList<Integer> findAllSuppliersId() {
-		ArrayList<Integer> suppliersId = new ArrayList<Integer>();
-		ArrayList<Supplier>suppliers= findAllSuppliers();
-		for (Supplier supplier : suppliers) {
-			suppliersId.add(supplier.getSupplierId());
-		}
-		return suppliersId;
 	}
 
 	@Override
@@ -76,9 +63,9 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 	
 	@Override
-	public ArrayList<Supplier> findSuppliersByStatus(SupplierStatus status) {
-		ArrayList<Supplier> suppliers = findAllSuppliers();
-		ArrayList<Supplier> suppliersByStatus = new ArrayList<Supplier>();
+	public List<Supplier> findSuppliersByStatus(SupplierStatus status) {
+		List<Supplier> suppliers = suprepo.findAll();
+		List<Supplier> suppliersByStatus = new ArrayList<Supplier>();
 		for(Supplier supplier : suppliers) {
 			if(supplier.getStatus() == status) {
 				suppliersByStatus.add(supplier);

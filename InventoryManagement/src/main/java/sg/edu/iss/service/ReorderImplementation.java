@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.model.OrderStatus;
+import sg.edu.iss.model.Product;
 import sg.edu.iss.model.Reorder;
 import sg.edu.iss.model.StockStatus;
+import sg.edu.iss.repo.ProductRepository;
 import sg.edu.iss.repo.ReorderRepository;
 import sg.edu.iss.repo.StockRepository;
 
@@ -22,11 +24,9 @@ public class ReorderImplementation implements ReorderInterface {
 	@Autowired 
 	StockRepository strepo;
 	
-	@Transactional
-	public void save(Reorder reorder) {
-		rrepo.save(reorder);
-	}
-
+	@Autowired
+	ProductRepository prepo;
+	
 	@Transactional(timeout = 30, readOnly = true)
 	public List<Reorder> list() {
 		return rrepo.findAll();
@@ -52,6 +52,9 @@ public class ReorderImplementation implements ReorderInterface {
 		Reorder dbReorder = getReorderById(reorder.getId());
 		if (dbReorder.getStatus() == OrderStatus.PENDING_ORDER) {
 			dbReorder.setStatus(OrderStatus.REORDERED);
+			Product dbProduct = prepo.findbyName(reorder.getProduct().getName());
+			dbProduct.addReorder(reorder);
+			prepo.flush();
 		}
 		else if (dbReorder.getStatus() == OrderStatus.REORDERED) {
 			dbReorder.setStatus(OrderStatus.RECEIVED);

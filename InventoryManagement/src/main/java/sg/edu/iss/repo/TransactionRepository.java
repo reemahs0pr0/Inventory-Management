@@ -14,6 +14,4 @@ public interface TransactionRepository extends JpaRepository<Transaction,Integer
 	@Query("Select t from Transaction t where t.date BETWEEN :start AND :end")
 	List<Transaction> findTransactionByDateRange(@Param("start")LocalDate start, @Param("end")LocalDate end);
 	
-	@Query("Select t from Transaction t order by t.id desc")
-	List<Transaction> findlatestTransaction();
 }
