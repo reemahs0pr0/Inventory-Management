@@ -120,12 +120,12 @@ public class ConsumptionServiceImpl implements ConsumptionService{
 				//comment next line when testing
 		        message.setTo(recipients);
 //				--------------------------------------TESTING------------------------------------
-//		        List<String> testRecipientsList = new ArrayList<>();
-//		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 1>);
+		        List<String> testRecipientsList = new ArrayList<>();
+		        testRecipientsList.add("tay_zi_han@yahoo.com.sg");
 //		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 2>);
 //		        testRecipientsList.add(<RECIPIENT EMAIL ADDRESS 3>);
-//		        String[] testRecipientsListArray = testRecipientsList.toArray(new String[0]);
-//				message.setTo(testRecipientsListArray);
+		        String[] testRecipientsListArray = testRecipientsList.toArray(new String[0]);
+				message.setTo(testRecipientsListArray);
 //				---------------------------------------------------------------------------------
 		        message.setSubject("Notification: Product Low In Stock");
 		        message.setText("[Product Id: " + dbConsumption.getProduct().getProductId() + "] " 
