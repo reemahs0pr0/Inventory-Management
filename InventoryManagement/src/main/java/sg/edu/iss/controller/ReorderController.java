@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import sg.edu.iss.model.Reorder;
-import sg.edu.iss.service.ProductService;
-import sg.edu.iss.service.ProductServiceImpl;
+import sg.edu.iss.model.SupplierStatus;
 import sg.edu.iss.service.ReorderImplementation;
 import sg.edu.iss.service.ReorderInterface;
+import sg.edu.iss.service.SupplierService;
+import sg.edu.iss.service.SupplierServiceImpl;
 
 @Controller
 @RequestMapping("/reorders")
@@ -28,7 +30,7 @@ public class ReorderController {
 	private ReorderInterface rservice;
 	
 	@Autowired
-	private ProductService proservice;
+	private SupplierService supservice;
 
 	@Autowired
 	public void setReorderImplementation(ReorderImplementation rimpl) {
@@ -36,16 +38,18 @@ public class ReorderController {
 	}
 	
 	@Autowired
-	public void setProductService(ProductServiceImpl productServiceImpl) {
-		this.proservice = productServiceImpl;
+	public void setSupplierService(SupplierServiceImpl supserviceimpl) {
+		this.supservice = supserviceimpl;
 	}
 	
 	// User requests to view the list of orders made
 	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		List<Reorder> rlist = rservice.list();
+	public String list(Model model, @Param("keyword") String keyword) {
+		List<Reorder> rlist = rservice.list(keyword);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("today", LocalDate.now().toString());
+		model.addAttribute("suppliers", supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
+		model.addAttribute("keyword", keyword);
 		return "reorderslist";
 	}
 

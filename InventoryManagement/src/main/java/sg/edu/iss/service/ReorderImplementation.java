@@ -1,11 +1,10 @@
 package sg.edu.iss.service;
 
-import java.time.LocalDate;    
+import java.time.LocalDate;     
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.model.OrderStatus;
 import sg.edu.iss.model.Product;
@@ -27,8 +26,11 @@ public class ReorderImplementation implements ReorderInterface {
 	@Autowired
 	ProductRepository prepo;
 	
-	@Transactional(timeout = 30, readOnly = true)
-	public List<Reorder> list() {
+	@Override
+	public List<Reorder> list(String keyword) {
+		if (keyword != null) {
+			return rrepo.search(keyword);
+		}
 		return rrepo.findAll();
 	}
 

@@ -17,6 +17,25 @@
 		</tr>
 	</table>
 	
+	<!-- search bar -->
+	<form th:action="@{/reorders/list}">
+	    Supplier: 
+	    <select name="keyword">
+    		<option th:each="s : ${suppliers}" th:value="${s.companyName}" th:text="${s.companyName}" ></option>
+    	</select>
+	    &nbsp;
+	    <input class="btn btn-success" type="submit" value="Search" />
+	    &nbsp;
+	    <input class="btn btn-danger" type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
+	
+	<!-- Clear fields -->
+	<script type="text/javascript">
+	    function clearSearch() {
+	        window.location = "[[@{/reorders/list}]]";
+	    }
+	</script>
+	
 	<!-- Generate list of orders needed to be reordered -->
 	<table class="table table-hover">
 		<thead>
