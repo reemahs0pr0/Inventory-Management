@@ -94,8 +94,11 @@ public class ProductController {
 	@RequestMapping(value = "/save1", method = RequestMethod.POST)
 	public String saveeditedProduct(@ModelAttribute("product") @Valid Product product, 
 			BindingResult bindingResult, Model model) {
-		Product prevProduct=proservice.findProductbyId(product.getProductId());
-		Product newProduct=(Product) model.getAttribute("product");
+		Product prevProduct = proservice.findProductbyId(product.getProductId());
+		Product newProduct = (Product) model.getAttribute("product");
+		Supplier prevSupplier = prevProduct.getSupplier();
+		Supplier newSupplier = supservice.findSupplierbyId(product.getSupplierId());
+		
 		if (bindingResult.hasErrors()) {	
 			model.addAttribute("suppliers",supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 			return "productform1";
@@ -108,29 +111,44 @@ public class ProductController {
 				return "productform1";
 			}
 			else {
-				 // to add supplier inside the product by the Id parsed from form 
-				 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
-				 //set product status again
-				 product.setStatus(ProductStatus.IN_USE);
-				 //adding product into corresponding supplier
-				 Supplier correspondingSupplier = supservice.findSupplierbyId(product.getSupplierId());
-				 correspondingSupplier.addProduct(product);
-				 //to save
-				 proservice.saveProduct(product);
+				 if(newSupplier != prevSupplier) {
+					 prevSupplier.removeProduct(prevProduct);
+					 supservice.saveSupplier(prevSupplier);
+					 product.setSupplier(newSupplier);
+					 product.setStatus(ProductStatus.IN_USE);
+					 proservice.saveProduct(product);
+					 newSupplier.addProduct(product);
+					 supservice.saveSupplier(newSupplier);
+				 }
+				 else {
+					// to add supplier inside the product by the Id parsed from form 
+					 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
+					 //set product status again
+					 product.setStatus(ProductStatus.IN_USE);
+					 //to save
+					 proservice.saveProduct(product);
+				 }
 				 return "forward:/product/list";
 			} 
 		}
 		else {
-			 // to add supplier inside the product by the Id parsed from form 
-			 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
-			 //set product status again
-			 product.setStatus(ProductStatus.IN_USE);
-			 //adding product into corresponding supplier
-			 Supplier correspondingSupplier =supservice.findSupplierbyId(product.getSupplierId());
-			 correspondingSupplier.addProduct(product);
-			 
-			 //to save
-			 proservice.saveProduct(product);
+			if(newSupplier != prevSupplier) {
+				 prevSupplier.removeProduct(prevProduct);
+				 supservice.saveSupplier(prevSupplier);
+				 product.setSupplier(newSupplier);
+				 product.setStatus(ProductStatus.IN_USE);
+				 proservice.saveProduct(product);
+				 newSupplier.addProduct(product);
+				 supservice.saveSupplier(newSupplier);
+			 }
+			 else {
+				// to add supplier inside the product by the Id parsed from form 
+				 product.setSupplier(supservice.findSupplierbyId(product.getSupplierId()));
+				 //set product status again
+				 product.setStatus(ProductStatus.IN_USE);
+				 //to save
+				 proservice.saveProduct(product);
+			 }
 			 return "forward:/product/list";
 		}
 	}
