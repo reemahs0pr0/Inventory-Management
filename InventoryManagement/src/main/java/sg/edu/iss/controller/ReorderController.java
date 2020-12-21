@@ -1,12 +1,24 @@
 package sg.edu.iss.controller;
 
-import java.time.LocalDate; 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+<<<<<<< Updated upstream
+=======
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +27,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import sg.edu.iss.model.Consumption;
+import sg.edu.iss.model.Product;
 import sg.edu.iss.model.Reorder;
+<<<<<<< Updated upstream
 import sg.edu.iss.model.SupplierStatus;
+=======
+import sg.edu.iss.model.Supplier;
+import sg.edu.iss.model.SupplierStatus;
+import sg.edu.iss.service.ProductService;
+import sg.edu.iss.service.ProductServiceImpl;
+>>>>>>> Stashed changes
 import sg.edu.iss.service.ReorderImplementation;
 import sg.edu.iss.service.ReorderInterface;
 import sg.edu.iss.service.SupplierService;
@@ -50,6 +71,19 @@ public class ReorderController {
 		model.addAttribute("today", LocalDate.now().toString());
 		model.addAttribute("suppliers", supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 		model.addAttribute("keyword", keyword);
+		return "reorderslist";
+	}
+	
+	@RequestMapping(value = "/list/filter") 
+	public String catalog(Model model, @Param("start")@DateTimeFormat(iso=ISO.DATE) LocalDate start,
+							@Param("end")@DateTimeFormat(iso=ISO.DATE) LocalDate end) {
+		
+		List<Reorder> reorders = rservice.findReorderByDate(start, end);
+		model.addAttribute("rlist", reorders);
+		model.addAttribute("today", LocalDate.now().toString());
+		model.addAttribute("start",start);
+		model.addAttribute("end",end);
+
 		return "reorderslist";
 	}
 
@@ -157,6 +191,162 @@ public class ReorderController {
 		}
 	}
 	
+	// Creates padding to center a string
+	public static String centerString (int width, String s) {
+	    return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+	}
+	
+	//generates report based on consumptions list passed in
+	public static void genReport(Supplier supplier, List<Reorder> reorders, LocalDate start, LocalDate end, 
+			String filepath) {
+		// for testing
+		System.out.println("Triggered");
+		
+        try {
+        	File myObj = new File(filepath);
+            if (myObj.createNewFile()) {
+              System.out.println("File created: " + myObj.getName());
+            } else {
+              System.out.println("File already exists.");
+            }
+        } 
+        catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        
+        try {
+            FileWriter myWriter = new FileWriter(filepath);
+            String spacer = "-";
+            String spacer2 = "=";
+            String nl = "\r\n"; //carriage return
+            //Heading
+            String title = "Inventory Reorder Report for products from Supplier " + supplier.getCompanyName();
+            myWriter.write(centerString(100, title + nl));
+            myWriter.write(spacer.repeat(title.length()) + nl);
+            //Table headings
+            myWriter.write(spacer2.repeat(161) + nl);
+            myWriter.write(String.format("%1$-5s", "Product Id"));
+            myWriter.write(String.format("%1$-11s", "Unit Price"));
+            myWriter.write(String.format("%1$-15s", "Qty"));
+            myWriter.write(String.format("%1$-15s", "Reorder Qty"));
+            myWriter.write(String.format("%1$-20s", "Min Order Qty"));
+            myWriter.write(String.format("%1$-20s", "Order Qty"));
+            myWriter.write(String.format("%1$-13s", "Price" + nl));
+            myWriter.write(spacer2.repeat(161) + nl);
+            //data
+            float total = 0;
+    		for (Reorder r : reorders) {
+                myWriter.write(String.format("%1$-5s", r.getProduct().getProductId()));
+                myWriter.write(String.format("%1$-11s", r.getProduct().getOriginalPrice()));
+                myWriter.write(String.format("%1$-15s", r.getStockUnits()));
+                myWriter.write(String.format("%1$-15s", r.getProduct().getReorderQty()));
+                myWriter.write(String.format("%1$-20s", r.getProduct().getMOQ()));
+                myWriter.write(String.format("%1$-20s", r.getOrderQty()));
+                myWriter.write(String.format("%1$-13s", (r.getProduct().getOriginalPrice() * r.getOrderQty())) + nl);
+                total += r.getProduct().getOriginalPrice() * r.getOrderQty();
+    		}
+    		//total
+    		myWriter.write(spacer2.repeat(161) + nl);
+    		myWriter.write(" ".repeat(120) + "TOTAL" + " ".repeat(30) + total + nl);
+    		myWriter.write(spacer2.repeat(161) + nl);
+    		//end
+    		myWriter.write(centerString(100, "End of Report"));
+    		
+            myWriter.flush();
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } 
+        catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+	}
+	
+	@RequestMapping(value = "/list/filter/report") 
+	public String GenerateReport(Model model, @Param("start")@DateTimeFormat(iso=ISO.DATE) LocalDate start,
+							@Param("end")@DateTimeFormat(iso=ISO.DATE) LocalDate end,
+							HttpServletResponse response) throws IOException {
+		
+		model.addAttribute("today", LocalDate.now().toString());
+		System.out.println(start);
+		System.out.println(end);
+		//if no date is input it will generate report for the whole list
+		if(start == null && end == null) {
+			List<Supplier> suppliers = supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING);
+			for(Supplier supplier : suppliers) {
+				List<Reorder> rlist = new ArrayList<Reorder>();
+				List<Product> products = supplier.getProducts();
+				for(Product product : products) {
+					List<Reorder> reorders = product.getReorders();
+					for(Reorder reorder : reorders) {
+						rlist.add(reorder);
+					}
+				}
+				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
+				genReport(supplier, rlist, start, end, filepath);
+				model.addAttribute("reorders", rservice.list());
+				
+				// Triggers download
+				response.setContentType("application/octet-stream");
+				String filename = supplier.getCompanyName() + "_report.dat";
+				response.setHeader("Content-Disposition",
+				"attachment;filename=" + filename);
+				File file = new File(filepath);
+				FileInputStream fileIn = new FileInputStream(file);
+				ServletOutputStream out = response.getOutputStream();
+
+				byte[] outputByte = new byte[4096];
+				//copy binary contect to output stream
+				while(fileIn.read(outputByte, 0, 4096) != -1) {
+				    out.write(outputByte, 0, 4096);
+				}
+				fileIn.close();
+				out.flush();
+				out.close();
+			}			
+		}
+		else {
+			List<Supplier> suppliers = supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING);
+			for(Supplier supplier : suppliers) {
+				List<Reorder> rlist = new ArrayList<Reorder>();
+				List<Product> products = supplier.getProducts();
+				for(Product product : products) {
+					List<Reorder> reorders = product.getReorders();
+					for(Reorder reorder : reorders) {
+						if((reorder.getDate().isAfter(start) || reorder.getDate().isEqual(start)) && 
+								(reorder.getDate().isBefore(end) || reorder.getDate().isEqual(end))) {
+							rlist.add(reorder);
+						}
+					}
+				}
+				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
+				genReport(supplier, rlist, start, end, filepath);
+				model.addAttribute("reorders", rservice.findReorderByDate(start, end));
+				
+				// Triggers download
+				String filename = supplier.getCompanyName() + "_report.dat";
+				response.setContentType("application/octet-stream");
+				response.setHeader("Content-Disposition",
+				"attachment;filename=" + filename);
+				File file = new File(filepath);
+				FileInputStream fileIn = new FileInputStream(file);
+				ServletOutputStream out = response.getOutputStream();
+
+				byte[] outputByte = new byte[4096];
+				//copy binary contect to output stream
+				while(fileIn.read(outputByte, 0, 4096) != -1) {
+				    out.write(outputByte, 0, 4096);
+				}
+				fileIn.close();
+				out.flush();
+				out.close();
+			}			
+			
+		}
+		return "reorderslist";
+	}
+		
 }
 	
 

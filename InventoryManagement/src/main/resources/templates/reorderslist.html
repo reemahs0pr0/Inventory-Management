@@ -17,6 +17,7 @@
 		</tr>
 	</table>
 	
+<<<<<<< Updated upstream
 	<!-- search bar -->
 	<form th:action="@{/reorders/list}">
 	    Supplier: 
@@ -30,10 +31,35 @@
 	</form>
 	
 	<!-- Clear fields -->
+=======
+	<form th:action="@{/reorders/list/filter}">
+	    Start: <input type="date" id="start" name="start" th:value="${start}" th:max="${today}">
+	    &nbsp;
+	    End: <input type="date" id="end" name="end" th:value="${end}" th:max="${today}">
+	    <input type="submit" class="btn btn-success" value="Search" onclick="return myFunction()" />
+	    &nbsp;
+	    <input type="button" class="btn btn-danger" value="Clear" id="btnClear" onclick="clearSearch()" />
+	    
+	    <input type="submit" class="btn btn-warning" value="Generate Report" id="generate" th:formaction="@{/reorders/list/filter/report}" onclick="return myFunction()"  />
+	</form>   
+>>>>>>> Stashed changes
 	<script type="text/javascript">
 	    function clearSearch() {
 	        window.location = "[[@{/reorders/list}]]";
 	    }
+<<<<<<< Updated upstream
+=======
+	    
+	    function myFunction() {
+	    	  var x = document.getElementById("start").value;
+	    	  var y= document.getElementById("end").value;
+	    	  if (x > y) { 
+	          	alert("End date must not be before start date");
+	          	return false;
+	    	  }
+	    	 return true;
+	    }
+>>>>>>> Stashed changes
 	</script>
 	
 	<!-- Generate list of orders needed to be reordered -->

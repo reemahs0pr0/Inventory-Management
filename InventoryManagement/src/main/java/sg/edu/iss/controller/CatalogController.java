@@ -75,9 +75,9 @@ public class CatalogController {
 							@Param("start")@DateTimeFormat(iso=ISO.DATE) LocalDate start,
 							@Param("end")@DateTimeFormat(iso=ISO.DATE) LocalDate end) {
 		
-		model.addAttribute("today", LocalDate.now().toString());
 		List<Consumption> consumptions = conservice.findConsumptionByTransactionIdwithDate(id, start, end);
 		model.addAttribute("consumptions", consumptions);
+		model.addAttribute("today", LocalDate.now().toString());
 		model.addAttribute("start",start);
 		model.addAttribute("end",end);
 
