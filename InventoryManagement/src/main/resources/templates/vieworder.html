@@ -42,8 +42,12 @@
 				<th>Date Received</th>
 				<td th:text="*{dateReceived}" style="padding-left:50px"></td>
 			</tr>
+			<tr>
+				<td></td>
+				<td><button type="submit" class="btn btn-success" th:if="*{dateReceived == null}">Order Received</button></td>
+				<td></td>
+			</tr>
 		</table>
-		<button type="submit" th:if="*{dateReceived == null}">Order Received</button>
 	</form>
 	<p><a th:href="@{/reorders/list}" class="btn btn-default">Reorders Page</a></p>
 	<div th:replace="fragments/general.html :: footer"></div>
