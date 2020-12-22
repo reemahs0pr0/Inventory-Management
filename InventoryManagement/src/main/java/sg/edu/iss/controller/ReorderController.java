@@ -220,7 +220,7 @@ public class ReorderController {
             myWriter.write("Qty" + " ".repeat(5));
             myWriter.write("Reorder Qty" + " ".repeat(5));
             myWriter.write("Min Order Qty" + " ".repeat(5));
-            myWriter.write("Order Qty" + " ".repeat(5));
+            myWriter.write("Order Qty" + " ".repeat(6));
             myWriter.write("Price" + nl);
             myWriter.write(spacer2.repeat(92) + nl);
             //data
@@ -231,8 +231,8 @@ public class ReorderController {
                 myWriter.write(r.getStockUnits() + " ".repeat(8));
                 myWriter.write(r.getProduct().getReorderQty() + " ".repeat(15));
                 myWriter.write(r.getProduct().getMOQ() + " ".repeat(17));
-                myWriter.write(r.getOrderQty() + " ".repeat(9));
-                myWriter.write( (r.getProduct().getOriginalPrice() * r.getOrderQty()) + nl);
+                myWriter.write(r.getOrderQty() + " ".repeat(8));
+                myWriter.write( (r.getProduct().getOriginalPrice() * r.getOrderQty()) + "0" + nl);
                 total += r.getProduct().getOriginalPrice() * r.getOrderQty();                
     		}
     		//total
@@ -272,11 +272,14 @@ public class ReorderController {
 						rlist.add(reorder);
 					}
 				}
+				if(rlist.isEmpty()) {
+					continue;
+				}
 				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
 				genReport(supplier, rlist, start, end, filepath);
 				model.addAttribute("reorders", rservice.list());
 				
-				// Triggers download
+				//Triggers download
 				response.setContentType("application/octet-stream");
 				String filename = supplier.getCompanyName() + "_report.dat";
 				response.setHeader("Content-Disposition",
@@ -303,11 +306,17 @@ public class ReorderController {
 				for(Product product : products) {
 					List<Reorder> reorders = product.getReorders();
 					for(Reorder reorder : reorders) {
-						if((reorder.getDate().isAfter(start) || reorder.getDate().isEqual(start)) && 
+						if(reorder.getDate() == null) {
+							continue;
+						}
+						else if((reorder.getDate().isAfter(start) || reorder.getDate().isEqual(start)) && 
 								(reorder.getDate().isBefore(end) || reorder.getDate().isEqual(end))) {
 							rlist.add(reorder);
 						}
 					}
+				}
+				if(rlist.isEmpty()) {
+					continue;
 				}
 				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
 				genReport(supplier, rlist, start, end, filepath);
