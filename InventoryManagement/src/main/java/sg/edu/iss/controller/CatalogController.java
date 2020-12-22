@@ -1,16 +1,22 @@
 package sg.edu.iss.controller;
 
-import java.io.File;  
+import java.io.File;   
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate; 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -18,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import sg.edu.iss.model.Consumption;
 import sg.edu.iss.model.Product;
@@ -46,10 +53,44 @@ public class CatalogController {
 		this.conservice=conServiceImpl;
 	}
 	
+//	@RequestMapping(value = "/list") 
+//	public String catalog(Model model, @Param("keyword") String keyword) {
+//		List<Product> products = proservice.listAll(keyword);
+//		model.addAttribute("products", products);
+//		model.addAttribute("keyword", keyword);
+//		
+//		return "catalog";
+//	}
+	
 	@RequestMapping(value = "/list") 
-	public String catalog(Model model, @Param("keyword") String keyword) {
-		List<Product> products = proservice.listAll(keyword);
-		model.addAttribute("products", products);
+	public String catalog(Model model, @Param("keyword") String keyword, @RequestParam("page") Optional<Integer> page, 
+			@RequestParam("size") Optional<Integer> size, @RequestParam("search") Optional<String> search) {
+		
+		List<Product> products;
+		if(page.isEmpty() && size.isEmpty()) {
+			products = proservice.listAll(keyword);
+		}
+		else {
+			if(keyword == null) {
+				products = proservice.listAll(null);
+			}
+			products = proservice.listAll(search.get());
+		}
+		
+		int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Page<Product> productPage = proservice.findPaginated(products, PageRequest.of(currentPage - 1, pageSize));
+
+        int totalPages = productPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+		
+		model.addAttribute("products", productPage);
 		model.addAttribute("keyword", keyword);
 		
 		return "catalog";

@@ -18,7 +18,7 @@
 	</table>
 		
 	<!-- search bar -->
-	<form th:action="@{/catalog/list}">
+	<form th:action="@{/catalog/list(size=${products.size})}">
 	    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
 	    &nbsp;
 	    <input class="btn btn-success" type="submit" value="Search" />
@@ -50,7 +50,7 @@
 			</tr>
 		</thead>
 
-		<tr th:each="product:${products}" class="table-row">
+		<tr th:each="product:${products.content}" class="table-row">
 			<td th:text=${product.productId}>Id</td>
 			<td> <a th:href="@{/catalog/details/{id}(id=${product.productId})}" th:text=${product.name}>Name</a></td>
 			<td th:text=${product.description}>Description</td>
@@ -63,6 +63,23 @@
 			<td th:text=${product.stock.status}>Stock Status</td>
 		</tr>
 	</table>
+	<div th:if="${products.totalPages > 0}" class="pagination" th:each="pageNumber : ${pageNumbers}">
+	    <a th:href="@{/catalog/list(size=${products.size}, page=${pageNumber}, search=${keyword})}" th:text=${pageNumber}
+	        th:class="${pageNumber==products.number + 1} ? active"></a>
+	</div>
+	<form th:action="@{/catalog/list(search=${keyword})}">
+		Records per page:
+	    <select name="size" onchange="this.form.submit()">
+	        <option th:unless="${products.size == 1}" value="1">1</option>
+	        <option th:if="${products.size == 1}" value="1" selected>1</option>
+	        <option th:unless="${products.size == 3}" value="3">3</option>
+	        <option th:if="${products.size == 3}" value="3" selected>3</option>
+	        <option th:unless="${products.size == 5}" value="5">5</option>
+	        <option th:if="${products.size == 5}" value="5" selected>5</option>
+	        <option th:unless="${products.size == 10}" value="10">10</option>
+	        <option th:if="${products.size == 10}" value="10" selected>10</option>
+	    </select>
+	</form>
     <br>
 	<div th:replace="fragments/general.html :: footer"></div>
 </body>
