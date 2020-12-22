@@ -1,6 +1,6 @@
 package sg.edu.iss.controller;
 
-import java.io.File;   
+import java.io.File;    
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -52,15 +51,6 @@ public class CatalogController {
 	public void setConService(ConsumptionServiceImpl conServiceImpl) {
 		this.conservice=conServiceImpl;
 	}
-	
-//	@RequestMapping(value = "/list") 
-//	public String catalog(Model model, @Param("keyword") String keyword) {
-//		List<Product> products = proservice.listAll(keyword);
-//		model.addAttribute("products", products);
-//		model.addAttribute("keyword", keyword);
-//		
-//		return "catalog";
-//	}
 	
 	@RequestMapping(value = "/list") 
 	public String catalog(Model model, @Param("keyword") String keyword, @RequestParam("page") Optional<Integer> page, 
