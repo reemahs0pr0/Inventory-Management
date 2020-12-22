@@ -84,7 +84,8 @@
     	<fieldset>
 			Select Supplier
 	 		<select th:field="*{supplierId}">
-    			<option th:each="s : ${suppliers}" th:value="${s.supplierId}" th:text="${s.companyName}" ></option>
+	 			<option th:each="s : ${suppliers}" th:value="${s.supplierId}" th:text="${s.companyName}" th:if="${product.supplier.companyName == s.companyName}" selected></option>
+    			<option th:each="s : ${suppliers}" th:value="${s.supplierId}" th:text="${s.companyName}" th:if="${product.supplier.companyName != s.companyName}" ></option>
     		</select>
 		</fieldset>
 		<fieldset>
