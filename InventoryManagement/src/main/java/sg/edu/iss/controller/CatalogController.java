@@ -64,18 +64,9 @@ public class CatalogController {
 	
 	@RequestMapping(value = "/list") 
 	public String catalog(Model model, @Param("keyword") String keyword, @RequestParam("page") Optional<Integer> page, 
-			@RequestParam("size") Optional<Integer> size, @RequestParam("search") Optional<String> search) {
+			@RequestParam("size") Optional<Integer> size) {
 		
-		List<Product> products;
-		if(page.isEmpty() && size.isEmpty()) {
-			products = proservice.listAll(keyword);
-		}
-		else {
-			if(keyword == null) {
-				products = proservice.listAll(null);
-			}
-			products = proservice.listAll(search.get());
-		}
+		List<Product> products = proservice.listAll(keyword);
 		
 		int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
