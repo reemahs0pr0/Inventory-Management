@@ -59,7 +59,6 @@ public class ReorderController {
 		List<Reorder> rlist = rservice.list();
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("today", LocalDate.now().toString());
-		model.addAttribute("suppliers", supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING));
 		return "reorderslist";
 	}
 	
@@ -258,11 +257,11 @@ public class ReorderController {
 							HttpServletResponse response) throws IOException {
 		
 		model.addAttribute("today", LocalDate.now().toString());
-		System.out.println(start);
-		System.out.println(end);
+		model.addAttribute("start",start);
+		model.addAttribute("end",end);
+		List<Supplier> suppliers = supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING);
 		//if no date is input it will generate report for the whole list
 		if(start == null && end == null) {
-			List<Supplier> suppliers = supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING);
 			for(Supplier supplier : suppliers) {
 				List<Reorder> rlist = new ArrayList<Reorder>();
 				List<Product> products = supplier.getProducts();
@@ -278,28 +277,9 @@ public class ReorderController {
 				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
 				genReport(supplier, rlist, start, end, filepath);
 				model.addAttribute("reorders", rservice.list());
-				
-				//Triggers download
-				response.setContentType("application/octet-stream");
-				String filename = supplier.getCompanyName() + "_report.dat";
-				response.setHeader("Content-Disposition",
-				"attachment;filename=" + filename);
-				File file = new File(filepath);
-				FileInputStream fileIn = new FileInputStream(file);
-				ServletOutputStream out = response.getOutputStream();
-
-				byte[] outputByte = new byte[4096];
-				//copy binary content to output stream
-				while(fileIn.read(outputByte, 0, 4096) != -1) {
-				    out.write(outputByte, 0, 4096);
-				}
-				fileIn.close();
-				out.flush();
-				out.close();
 			}			
 		}
 		else {
-			List<Supplier> suppliers = supservice.findSuppliersByStatus(SupplierStatus.SUPPLYING);
 			for(Supplier supplier : suppliers) {
 				List<Reorder> rlist = new ArrayList<Reorder>();
 				List<Product> products = supplier.getProducts();
@@ -321,24 +301,6 @@ public class ReorderController {
 				String filepath = "C:\\forCa\\" + supplier.getCompanyName() + "_report.dat";
 				genReport(supplier, rlist, start, end, filepath);
 				model.addAttribute("reorders", rservice.findReorderByDate(start, end));
-				
-				// Triggers download
-				String filename = supplier.getCompanyName() + "_report.dat";
-				response.setContentType("application/octet-stream");
-				response.setHeader("Content-Disposition",
-				"attachment;filename=" + filename);
-				File file = new File(filepath);
-				FileInputStream fileIn = new FileInputStream(file);
-				ServletOutputStream out = response.getOutputStream();
-
-				byte[] outputByte = new byte[4096];
-				//copy binary content to output stream
-				while(fileIn.read(outputByte, 0, 4096) != -1) {
-				    out.write(outputByte, 0, 4096);
-				}
-				fileIn.close();
-				out.flush();
-				out.close();
 			}			
 			
 		}
